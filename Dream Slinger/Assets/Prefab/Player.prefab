@@ -138,15 +138,16 @@ MonoBehaviour:
     m_Bits: 64
   groundCheck: {fileID: 4564481232395112398}
   projectileSpeed: 0
-  minProjectileSpd: 10
-  maxProjectileSpd: 25
-  xShootScale: 1
-  yShootScale: 1
+  minProjectileSpd: 8
+  maxProjectileSpd: 24
+  xShootScale: 0.95
+  yShootScale: 1.05
   gravityScale: 1
-  maxGravityScale: 1.5
-  gravityGainSpeed: 2.5
-  groundCheckRadius: 0.5
+  maxGravityScale: 3
+  gravityGainSpeed: 2
+  groundCheckRadius: 1
   isPlayerGainGravity: 0
+  isGrounded: 0
 --- !u!58 &4564481232395112396
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -156,13 +157,13 @@ CircleCollider2D:
   m_GameObject: {fileID: 4564481232395112394}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 4a142047b5a3bbd4b9a49b6462bf578b, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.8
 --- !u!50 &4564481232395112395
 Rigidbody2D:
   serializedVersion: 4
@@ -183,4 +184,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4

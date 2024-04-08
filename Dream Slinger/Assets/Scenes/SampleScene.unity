@@ -2026,6 +2026,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 519420031}
     - target: {fileID: 4564481232395112397, guid: b08442446b387824fad744262ee25e15, type: 3}
+      propertyPath: xShootScale
+      value: 0.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 4564481232395112397, guid: b08442446b387824fad744262ee25e15, type: 3}
+      propertyPath: yShootScale
+      value: 1.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 4564481232395112397, guid: b08442446b387824fad744262ee25e15, type: 3}
       propertyPath: maxGravityScale
       value: 3
       objectReference: {fileID: 0}
