@@ -137,17 +137,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   groundCheck: {fileID: 4564481232395112398}
-  projectileSpeed: 0
-  minProjectileSpd: 8
-  maxProjectileSpd: 24
+  projectileSpeed: 15
+  minProjectileSpd: 15
+  maxProjectileSpd: 30
+  counterForceScale: 0.33
   xShootScale: 0.95
   yShootScale: 1.05
-  gravityScale: 1
+  gravityScale: 0
   maxGravityScale: 3
-  gravityGainSpeed: 2
-  groundCheckRadius: 1
+  gravityGainSpeed: 2.25
+  groundCheckRadius: 0.9
   isPlayerGainGravity: 0
-  isGrounded: 0
+  isGrounded: 1
 --- !u!58 &4564481232395112396
 CircleCollider2D:
   m_ObjectHideFlags: 0

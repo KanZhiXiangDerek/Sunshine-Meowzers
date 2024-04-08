@@ -2005,53 +2005,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 4564481232395112395, guid: b08442446b387824fad744262ee25e15, type: 3}
-      propertyPath: m_Constraints
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4564481232395112396, guid: b08442446b387824fad744262ee25e15, type: 3}
-      propertyPath: m_Radius
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4564481232395112396, guid: b08442446b387824fad744262ee25e15, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 6200000, guid: 4a142047b5a3bbd4b9a49b6462bf578b, type: 2}
-    - target: {fileID: 4564481232395112396, guid: b08442446b387824fad744262ee25e15, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4564481232395112397, guid: b08442446b387824fad744262ee25e15, type: 3}
       propertyPath: cam
       value: 
       objectReference: {fileID: 519420031}
     - target: {fileID: 4564481232395112397, guid: b08442446b387824fad744262ee25e15, type: 3}
-      propertyPath: xShootScale
-      value: 0.95
-      objectReference: {fileID: 0}
-    - target: {fileID: 4564481232395112397, guid: b08442446b387824fad744262ee25e15, type: 3}
-      propertyPath: yShootScale
-      value: 1.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 4564481232395112397, guid: b08442446b387824fad744262ee25e15, type: 3}
-      propertyPath: maxGravityScale
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4564481232395112397, guid: b08442446b387824fad744262ee25e15, type: 3}
-      propertyPath: gravityGainSpeed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4564481232395112397, guid: b08442446b387824fad744262ee25e15, type: 3}
       propertyPath: maxProjectileSpd
-      value: 24
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 4564481232395112397, guid: b08442446b387824fad744262ee25e15, type: 3}
       propertyPath: minProjectileSpd
-      value: 8
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4564481232395112397, guid: b08442446b387824fad744262ee25e15, type: 3}
+      propertyPath: counterForceScale
+      value: 0.33
       objectReference: {fileID: 0}
     - target: {fileID: 4564481232395112397, guid: b08442446b387824fad744262ee25e15, type: 3}
       propertyPath: groundCheckRadius
-      value: 1
+      value: 0.81
       objectReference: {fileID: 0}
     - target: {fileID: 4564481232395112398, guid: b08442446b387824fad744262ee25e15, type: 3}
       propertyPath: m_RootOrder

@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private float dragDistance;
     [SerializeField] float minProjectileSpd;
     [SerializeField] float maxProjectileSpd;
+    [SerializeField] float counterForceScale = 0.3f;
 
     [SerializeField] float xShootScale;
     [SerializeField] float yShootScale;
@@ -95,8 +96,11 @@ public class PlayerController : MonoBehaviour
     }
     IEnumerator CounterForce(Vector2 dir, float force)
     {
-        float currentCounterForce = force * 0.3f;
-        yield return new WaitForSeconds(0.25f);
+        float currentCounterForce = force * counterForceScale;
+        float timeDelay = 5f / force;
+        timeDelay = Mathf.Clamp(timeDelay, 0.01f, 0.3f);
+        Debug.Log("Counter Force Time Delay : " + timeDelay);
+        yield return new WaitForSeconds(timeDelay);
         Debug.Log(force + " and " + currentCounterForce);
         if(!isGrounded)
         rb.AddForce(dir * currentCounterForce, ForceMode2D.Impulse);
