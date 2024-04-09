@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("References"), Space(10)]
     [SerializeField] private Camera cam;
+
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private Transform groundCheck;
@@ -24,9 +25,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float gravityScale;
     [SerializeField] float maxGravityScale;
     [SerializeField] float gravityGainSpeed = 2.5f;
+    float currentGravityGainSpeed;
     [SerializeField] float groundCheckRadius = 0.5f;
-    [SerializeField] bool isPlayerGainGravity;
+    //[SerializeField] bool isPlayerGainGravity;
     [SerializeField] bool isGrounded;
+    [SerializeField] bool isAbleToExtraJump;
 
     [Header("Others"), Space(10)]
     Vector2 mousePos;
@@ -36,6 +39,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        currentGravityGainSpeed = gravityGainSpeed;
         gravityScale = maxGravityScale;
     }
 
@@ -46,13 +50,11 @@ public class PlayerController : MonoBehaviour
 
         if (isGrounded)
         {
-            rb.gravityScale = 0;
-            gravityScale = 0;
-            isPlayerGainGravity = false;
+            //isPlayerGainGravity = false;
         }
         else
         {
-            isPlayerGainGravity = true;
+            //isPlayerGainGravity = true;
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -64,7 +66,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
             endPoint = cam.ScreenToWorldPoint(Input.mousePosition);
-            if (isGrounded)
+            if (isGrounded || isAbleToExtraJump)
             {
                 rb.velocity = rb.velocity * 0.1f;
                 Debug.Log("SHOOT");
@@ -75,24 +77,28 @@ public class PlayerController : MonoBehaviour
                 projectileSpeed = dragDistance * 2.5f;
                 projectileSpeed = Mathf.Clamp(projectileSpeed, minProjectileSpd, maxProjectileSpd);
                 rb.AddForce(-adjustedDir * projectileSpeed, ForceMode2D.Impulse);
+                gravityScale = 0;
                 StartCoroutine(CounterForce(adjustedDir, projectileSpeed));
-                //ReduceGravity();
             }
         }
     }
 
     private void FixedUpdate()
     {
-        if (isPlayerGainGravity)
-        {
+        //if (isPlayerGainGravity)
+        //{
             rb.AddForce(Physics2D.gravity * gravityScale, ForceMode2D.Force);
-            gravityScale += Mathf.Pow(gravityGainSpeed, 6 / 2.5f) * Time.fixedDeltaTime;
+            gravityScale += Mathf.Pow(currentGravityGainSpeed, 6 / 2.5f) * Time.fixedDeltaTime;
             if (gravityScale >= maxGravityScale)
             {
                 gravityScale = maxGravityScale;
-                isPlayerGainGravity = false;
+                //isPlayerGainGravity = false;
             }
-        }
+        //}
+        //else
+        //{
+        //    gravityScale = 0;
+        //}
     }
     IEnumerator CounterForce(Vector2 dir, float force)
     {
@@ -102,23 +108,34 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Counter Force Time Delay : " + timeDelay);
         yield return new WaitForSeconds(timeDelay);
         Debug.Log(force + " and " + currentCounterForce);
-        if(!isGrounded)
-        rb.AddForce(dir * currentCounterForce, ForceMode2D.Impulse);
+        if (!isGrounded)
+            rb.AddForce(dir * currentCounterForce, ForceMode2D.Impulse);
         yield return null;
     }
 
-    //private void ReduceGravity()
-    //{
-    //    gravityScale = 0f;
-    //}
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void ExtraJump()
     {
-        if (collision.gameObject.tag == "Ground")
-        {
-            rb.velocity = Vector2.zero;
-            Debug.Log("Collide With Ground");
-        }
+        StartCoroutine(EnableExtraJump(0.5f));
+    }
+    private IEnumerator EnableExtraJump(float timePeriod)
+    {
+        isAbleToExtraJump = true;
+        yield return new WaitForSeconds(timePeriod);
+        isAbleToExtraJump = false;
+    }
+
+    public void SetGravityScale(float newGravityScale)
+    {
+        gravityScale = newGravityScale;
+    }
+
+    public void SetGravityGainSpeedOnGround()
+    {
+        currentGravityGainSpeed = gravityGainSpeed/2;
+    }
+
+    public void SetGravityGainSpeedToOG()
+    {
+        currentGravityGainSpeed = gravityGainSpeed;
     }
 }
-
