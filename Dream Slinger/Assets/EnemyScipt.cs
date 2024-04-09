@@ -5,7 +5,11 @@ using UnityEngine;
 public class EnemyScipt : MonoBehaviour
 {
     [SerializeField] private bool ableToBeDestroyed;
-    
+
+    private void Start()
+    {
+        ableToBeDestroyed = true;
+    }
     public bool IsAbleToBeDestroyed()
     {
         return ableToBeDestroyed;

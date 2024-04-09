@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private LayerMask whatIsGround;
+    [SerializeField] private LayerMask whatIsEnemy;
     [SerializeField] private Transform groundCheck;
 
     [Header("Drag And Shoot Stats"), Space(10)]
@@ -28,14 +29,21 @@ public class PlayerController : MonoBehaviour
     float currentGravityGainSpeed;
     [SerializeField] float groundCheckRadius = 0.5f;
     //[SerializeField] bool isPlayerGainGravity;
+
     [SerializeField] bool isGrounded;
     [SerializeField] bool isAbleToExtraJump;
+    [SerializeField] bool isNearEnemy;
+    [SerializeField] float enemyCheckRadius;
 
     [Header("Others"), Space(10)]
     Vector2 mousePos;
     Vector2 startPoint;
     Vector2 endPoint;
 
+    bool canTimeSlow = true;
+
+    float timeToNextTimeSlow = 0.5f;
+    float currentTimeToNextSlow;
 
     void Start()
     {
@@ -47,15 +55,14 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
+        isNearEnemy = Physics2D.OverlapCircle(transform.position, enemyCheckRadius, whatIsEnemy);
 
-        if (isGrounded)
+        if (isNearEnemy && currentTimeToNextSlow <= 0)
         {
-            //isPlayerGainGravity = false;
+            GameMan.instance.TimeSlow();
+            currentTimeToNextSlow = timeToNextTimeSlow;
         }
-        else
-        {
-            //isPlayerGainGravity = true;
-        }
+        currentTimeToNextSlow -= Time.deltaTime;
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
@@ -63,12 +70,13 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Drag");
         }
 
+
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
             endPoint = cam.ScreenToWorldPoint(Input.mousePosition);
-            if (isGrounded || isAbleToExtraJump)
+            if (isGrounded || isNearEnemy || isAbleToExtraJump)
             {
-                rb.velocity = rb.velocity * 0.1f;
+                rb.velocity = rb.velocity * 0.01f;
                 Debug.Log("SHOOT");
                 Vector2 direction = (endPoint - startPoint).normalized; // Calculate the direction vector
                 Vector2 adjustedDir = new Vector2(direction.x * xShootScale, direction.y * yShootScale);
@@ -76,6 +84,7 @@ public class PlayerController : MonoBehaviour
                 //float magnitude = (endPoint - startPoint).magnitude;
                 projectileSpeed = dragDistance * 2.5f;
                 projectileSpeed = Mathf.Clamp(projectileSpeed, minProjectileSpd, maxProjectileSpd);
+                GameMan.instance.SlowDownLengthReduce(3f);
                 rb.AddForce(-adjustedDir * projectileSpeed, ForceMode2D.Impulse);
                 gravityScale = 0;
                 StartCoroutine(CounterForce(adjustedDir, projectileSpeed));
@@ -87,13 +96,13 @@ public class PlayerController : MonoBehaviour
     {
         //if (isPlayerGainGravity)
         //{
-            rb.AddForce(Physics2D.gravity * gravityScale, ForceMode2D.Force);
-            gravityScale += Mathf.Pow(currentGravityGainSpeed, 6 / 2.5f) * Time.fixedDeltaTime;
-            if (gravityScale >= maxGravityScale)
-            {
-                gravityScale = maxGravityScale;
-                //isPlayerGainGravity = false;
-            }
+        rb.AddForce(Physics2D.gravity * gravityScale, ForceMode2D.Force);
+        gravityScale += Mathf.Pow(currentGravityGainSpeed, 6 / 2.5f) * Time.fixedDeltaTime;
+        if (gravityScale >= maxGravityScale)
+        {
+            gravityScale = maxGravityScale;
+            //isPlayerGainGravity = false;
+        }
         //}
         //else
         //{
@@ -104,7 +113,7 @@ public class PlayerController : MonoBehaviour
     {
         float currentCounterForce = force * counterForceScale;
         float timeDelay = 5f / force;
-        timeDelay = Mathf.Clamp(timeDelay, 0.01f, 0.3f);
+        timeDelay = Mathf.Clamp(timeDelay, 0.18f, 0.3f);
         Debug.Log("Counter Force Time Delay : " + timeDelay);
         yield return new WaitForSeconds(timeDelay);
         Debug.Log(force + " and " + currentCounterForce);
@@ -115,7 +124,7 @@ public class PlayerController : MonoBehaviour
 
     public void ExtraJump()
     {
-        StartCoroutine(EnableExtraJump(0.5f));
+        StartCoroutine(EnableExtraJump(1.0f));
     }
     private IEnumerator EnableExtraJump(float timePeriod)
     {
@@ -131,7 +140,7 @@ public class PlayerController : MonoBehaviour
 
     public void SetGravityGainSpeedOnGround()
     {
-        currentGravityGainSpeed = gravityGainSpeed/2;
+        currentGravityGainSpeed = gravityGainSpeed / 2;
     }
 
     public void SetGravityGainSpeedToOG()

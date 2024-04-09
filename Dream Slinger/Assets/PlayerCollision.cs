@@ -24,19 +24,6 @@ public class PlayerCollision : MonoBehaviour
         {
             Respawn();
         }
-        if (collision.gameObject.tag == "Enemy")
-        {
-            if (collision.gameObject.GetComponent<EnemyScipt>().IsAbleToBeDestroyed())
-            {
-                rb.velocity = Vector2.zero;
-                Destroy(collision.gameObject);
-                playerController.ExtraJump();
-            }
-            else
-            {
-                Respawn();
-            }
-        }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -74,6 +61,22 @@ public class PlayerCollision : MonoBehaviour
             EnemyDetect enemyDetect = collision.gameObject.GetComponent<EnemyDetect>();
             enemyDetect.SetEnemyAbleToDestroy(false);
         }
+
+        if (collision.gameObject.tag == "Enemy")
+        {
+            if (collision.gameObject.GetComponent<EnemyScipt>().IsAbleToBeDestroyed())
+            {
+                //rb.velocity = Vector2.zero;
+                playerController.SetGravityScale(0f);
+                Destroy(collision.gameObject);
+                playerController.ExtraJump();
+            }
+            else
+            {
+                Respawn();
+            }
+        }
+        
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -82,6 +85,12 @@ public class PlayerCollision : MonoBehaviour
         {
             AreaManager areaMan = collision.gameObject.GetComponent<AreaManager>();
             areaMan.SetCamera(false);
+        }
+
+        if (collision.gameObject.tag == "EnemyDetection")
+        {
+            EnemyDetect enemyDetect = collision.gameObject.GetComponent<EnemyDetect>();
+            enemyDetect.SetEnemyAbleToDestroy(true);
         }
     }
 
