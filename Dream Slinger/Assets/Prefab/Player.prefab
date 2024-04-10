@@ -406,7 +406,7 @@ MonoBehaviour:
   groundCheck: {fileID: 4564481232395112398}
   trajectory: {fileID: 965696545}
   projectileSpeed: 15
-  minProjectileSpd: 15
+  minProjectileSpd: 10
   maxProjectileSpd: 40
   counterForceScale: 0.33
   xShootScale: 1
@@ -590,7 +590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef0d0b97ffd50114dad62714c190e60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dotNumbers: 10
+  dotNumbers: 8
   dotPrefab: {fileID: 152855694}
   dotParent: {fileID: 1127973364}
   dotSpacing: 0.05
