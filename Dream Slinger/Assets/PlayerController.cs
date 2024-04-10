@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform groundCheck;
 
     [Header("Drag And Shoot Stats"), Space(10)]
+    [SerializeField] private Trajectory trajectory;
     [SerializeField] private float projectileSpeed;
     private float dragDistance;
     [SerializeField] float minProjectileSpd;
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour
     [Header("Others"), Space(10)]
     Vector2 mousePos;
     Vector2 startPoint;
+    Vector2 currentPoint;
     Vector2 endPoint;
 
     bool canTimeSlow = true;
@@ -61,6 +63,7 @@ public class PlayerController : MonoBehaviour
         {
             GameMan.instance.TimeSlow();
             currentTimeToNextSlow = timeToNextTimeSlow;
+
         }
         currentTimeToNextSlow -= Time.deltaTime;
 
@@ -68,11 +71,22 @@ public class PlayerController : MonoBehaviour
         {
             startPoint = cam.ScreenToWorldPoint(Input.mousePosition);
             Debug.Log("Drag");
+            trajectory.ShowDot();
         }
 
+        if (Input.GetKey(KeyCode.Mouse0))
+        {
+            currentPoint = cam.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 direction = (currentPoint - startPoint).normalized; // Calculate the direction vector
+            float tempDragDistance = Vector2.Distance(currentPoint, startPoint);
+            tempDragDistance = Mathf.Clamp(tempDragDistance, 6, 16);
+            float currentForce = tempDragDistance * 2.5f;
+            trajectory.UpdateDots(transform.position, (-direction * currentForce), 3f);
+        }
 
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
+            trajectory.HideDot();
             endPoint = cam.ScreenToWorldPoint(Input.mousePosition);
             if (isGrounded || isNearEnemy || isAbleToExtraJump)
             {
@@ -81,6 +95,7 @@ public class PlayerController : MonoBehaviour
                 Vector2 direction = (endPoint - startPoint).normalized; // Calculate the direction vector
                 Vector2 adjustedDir = new Vector2(direction.x * xShootScale, direction.y * yShootScale);
                 dragDistance = Vector2.Distance(endPoint, startPoint);
+                Debug.DrawLine(startPoint, endPoint);
                 //float magnitude = (endPoint - startPoint).magnitude;
                 projectileSpeed = dragDistance * 2.5f;
                 projectileSpeed = Mathf.Clamp(projectileSpeed, minProjectileSpd, maxProjectileSpd);
