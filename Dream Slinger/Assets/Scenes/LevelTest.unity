@@ -6046,9 +6046,37 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4564481232012740500, guid: b08442446b387824fad744262ee25e15, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: cafd8db41a1acf546b40bc9afe471c34, type: 3}
+    - target: {fileID: 4564481232012740500, guid: b08442446b387824fad744262ee25e15, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4564481232012740500, guid: b08442446b387824fad744262ee25e15, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4564481232012740500, guid: b08442446b387824fad744262ee25e15, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4564481232012740500, guid: b08442446b387824fad744262ee25e15, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
     - target: {fileID: 4564481232395112394, guid: b08442446b387824fad744262ee25e15, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4564481232395112396, guid: b08442446b387824fad744262ee25e15, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 4564481232395112396, guid: b08442446b387824fad744262ee25e15, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.27
       objectReference: {fileID: 0}
     - target: {fileID: 4564481232395112397, guid: b08442446b387824fad744262ee25e15, type: 3}
       propertyPath: cam
