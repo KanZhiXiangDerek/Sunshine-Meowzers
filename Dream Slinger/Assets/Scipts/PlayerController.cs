@@ -122,7 +122,7 @@ public class PlayerController : MonoBehaviour
                     Debug.Log(enemyDirection);
                     adjustedDir = enemyDirection;
                     projectileSpeed *= enemyDashMutipler;
-                    projectileSpeed = Mathf.Clamp(projectileSpeed, 48f, 60f);
+                    projectileSpeed = Mathf.Clamp(projectileSpeed, 60f, 80f);
                     StartCoroutine(TempDisableCounterForce(0.8f));
                 }
                 else

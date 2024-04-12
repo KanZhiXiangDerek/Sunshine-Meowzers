@@ -6933,6 +6933,10 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 4564481232395112397, guid: b08442446b387824fad744262ee25e15, type: 3}
+      propertyPath: enemyCheckBox.y
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4564481232395112398, guid: b08442446b387824fad744262ee25e15, type: 3}
       propertyPath: m_RootOrder
       value: 13
