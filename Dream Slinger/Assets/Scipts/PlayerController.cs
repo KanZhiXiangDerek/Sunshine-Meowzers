@@ -6,11 +6,12 @@ public class PlayerController : MonoBehaviour
 {
     [Header("References"), Space(10)]
     [SerializeField] private Camera cam;
-
+    
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private LayerMask whatIsEnemy;
     [SerializeField] private Transform groundCheck;
+    [SerializeField] private Transform rayCastPos;
 
     [Header("Drag And Shoot Stats"), Space(10)]
     [SerializeField] private Trajectory trajectory;
@@ -18,6 +19,9 @@ public class PlayerController : MonoBehaviour
     private float dragDistance;
     [SerializeField] float minProjectileSpd;
     [SerializeField] float maxProjectileSpd;
+    [SerializeField] float enemyDashMutipler = 4.0f;
+    [SerializeField] Vector2 enemyCheckBox;
+    [SerializeField] float enemyCheckRadius = 5.0f;
     [SerializeField] float counterForceScale = 0.3f;
 
     [SerializeField] float xShootScale;
@@ -34,7 +38,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool isGrounded;
     [SerializeField] bool isAbleToExtraJump;
     [SerializeField] bool isNearEnemy;
-    [SerializeField] float enemyCheckRadius;
+
 
     [Header("Others"), Space(10)]
     Vector2 mousePos;
@@ -44,9 +48,11 @@ public class PlayerController : MonoBehaviour
 
     bool canTimeSlow = true;
 
+
     float timeToNextTimeSlow = 0.5f;
     float currentTimeToNextSlow;
 
+    bool canCounterForce;
     void Start()
     {
         currentGravityGainSpeed = gravityGainSpeed;
@@ -59,18 +65,14 @@ public class PlayerController : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
         isNearEnemy = Physics2D.OverlapCircle(transform.position, enemyCheckRadius, whatIsEnemy);
 
-        if (isNearEnemy && currentTimeToNextSlow <= 0)
-        {
-            GameMan.instance.TimeSlow();
-            currentTimeToNextSlow = timeToNextTimeSlow;
 
-        }
+
         currentTimeToNextSlow -= Time.deltaTime;
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             startPoint = cam.ScreenToWorldPoint(Input.mousePosition);
-            Debug.Log("Drag");
+
             trajectory.ShowDot();
         }
 
@@ -82,27 +84,53 @@ public class PlayerController : MonoBehaviour
             tempDragDistance = Mathf.Clamp(tempDragDistance, 6, 16);
             float currentForce = tempDragDistance * 2.5f;
             trajectory.UpdateDots(transform.position, (-direction * currentForce), 3f);
+
+            if (isNearEnemy && currentTimeToNextSlow <= 0 && !isGrounded)
+            {
+                RaycastHit2D hit = Physics2D.BoxCast(rayCastPos.position, enemyCheckBox, 1f, -direction, whatIsEnemy);
+                if (hit.collider != null)
+                {
+                    GameMan.instance.TimeSlow();
+                    currentTimeToNextSlow = timeToNextTimeSlow;
+                }
+
+            }
         }
 
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
             trajectory.HideDot();
             endPoint = cam.ScreenToWorldPoint(Input.mousePosition);
-            if (isGrounded || isNearEnemy || isAbleToExtraJump)
+            Vector2 direction = (endPoint - startPoint).normalized; // Calculate the direction vector
+            RaycastHit2D hit = Physics2D.BoxCast(rayCastPos.position, enemyCheckBox, 90f, -direction, enemyCheckRadius, whatIsEnemy);
+
+            if (isGrounded || isAbleToExtraJump || isNearEnemy)
             {
+                Vector2 adjustedDir;
                 rb.velocity = rb.velocity * 0.01f;
-                Debug.Log("SHOOT");
-                Vector2 direction = (endPoint - startPoint).normalized; // Calculate the direction vector
-                Vector2 adjustedDir = new Vector2(direction.x * xShootScale, direction.y * yShootScale);
                 dragDistance = Vector2.Distance(endPoint, startPoint);
                 Debug.DrawLine(startPoint, endPoint);
-                //float magnitude = (endPoint - startPoint).magnitude;
                 projectileSpeed = dragDistance * 2.5f;
                 projectileSpeed = Mathf.Clamp(projectileSpeed, minProjectileSpd, maxProjectileSpd);
-                GameMan.instance.SlowDownLengthReduce(3f);
-                rb.AddForce(-adjustedDir * projectileSpeed, ForceMode2D.Impulse);
+                GameMan.instance.SlowDownLengthReduce(2f);
+
                 gravityScale = 0;
+
+                if (hit && isNearEnemy && !isGrounded)
+                {
+                    Vector2 enemyDirection = (transform.position - hit.transform.position).normalized; // Calculate the direction vector
+                    Debug.Log(enemyDirection);
+                    adjustedDir = enemyDirection;
+                    projectileSpeed *= enemyDashMutipler;
+                    projectileSpeed = Mathf.Clamp(projectileSpeed, 48f, 60f);
+                    StartCoroutine(TempDisableCounterForce(0.8f));
+                }
+                else
+                {
+                    adjustedDir = new Vector2(direction.x * xShootScale, direction.y * yShootScale);
+                }
                 StartCoroutine(CounterForce(adjustedDir, projectileSpeed));
+                rb.AddForce(-adjustedDir * projectileSpeed, ForceMode2D.Impulse);
             }
         }
     }
@@ -126,17 +154,27 @@ public class PlayerController : MonoBehaviour
     }
     IEnumerator CounterForce(Vector2 dir, float force)
     {
-        float currentCounterForce = force * counterForceScale;
+        float counterForce = force * counterForceScale;
         float timeDelay = 5f / force;
         timeDelay = Mathf.Clamp(timeDelay, 0.18f, 0.3f);
-        Debug.Log("Counter Force Time Delay : " + timeDelay);
+
         yield return new WaitForSeconds(timeDelay);
-        Debug.Log(force + " and " + currentCounterForce);
-        if (!isGrounded)
-            rb.AddForce(dir * currentCounterForce, ForceMode2D.Impulse);
+
+        if (!isGrounded && canCounterForce)
+        {
+            rb.AddForce(dir * counterForce, ForceMode2D.Impulse);
+        }
         yield return null;
+
+
     }
 
+    IEnumerator TempDisableCounterForce(float timer)
+    {
+        canCounterForce = false;
+        yield return new WaitForSeconds(timer);
+        canCounterForce = true;
+    }
     public void ExtraJump()
     {
         StartCoroutine(EnableExtraJump(1.0f));
@@ -144,7 +182,9 @@ public class PlayerController : MonoBehaviour
     private IEnumerator EnableExtraJump(float timePeriod)
     {
         isAbleToExtraJump = true;
+        GameMan.instance.TimeSlow();
         yield return new WaitForSeconds(timePeriod);
+        GameMan.instance.SlowDownLengthReduce(3f);
         isAbleToExtraJump = false;
     }
 
@@ -161,5 +201,15 @@ public class PlayerController : MonoBehaviour
     public void SetGravityGainSpeedToOG()
     {
         currentGravityGainSpeed = gravityGainSpeed;
+    }
+
+    public bool GetIsGrounded()
+    {
+        return isGrounded;
+    }
+
+    public void TempExtendDisableCounterForce(float timer)
+    {
+        StartCoroutine(TempDisableCounterForce(timer));
     }
 }

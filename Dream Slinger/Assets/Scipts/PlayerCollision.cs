@@ -16,13 +16,26 @@ public class PlayerCollision : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ground")
         {
-            rb.velocity = Vector2.zero;
+            rb.velocity = rb.velocity / 10f;
             playerController.SetGravityScale(0f);
-            Debug.Log("Collide With Ground");
         }
         if (collision.gameObject.tag == "Obstacle")
         {
             Respawn();
+        }
+
+        if (collision.gameObject.tag == "Enemy")
+        {
+            transform.position = Vector2.MoveTowards(transform.position, collision.transform.position, 50f * Time.deltaTime);
+            if (collision.gameObject.GetComponent<EnemyScipt>().IsAbleToBeDestroyed())
+            {
+                Destroy(collision.gameObject);
+                playerController.ExtraJump();
+            }
+            else
+            {
+                Respawn();
+            }
         }
     }
 
@@ -32,6 +45,7 @@ public class PlayerCollision : MonoBehaviour
         {
             playerController.SetGravityGainSpeedOnGround();
         }
+       
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -39,6 +53,13 @@ public class PlayerCollision : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             playerController.SetGravityGainSpeedToOG();
+        }
+        if (collision.gameObject.tag == "Enemy")
+        {
+            rb.velocity = Vector2.zero;
+            rb.gravityScale = 0;
+            playerController.SetGravityScale(0f);
+            playerController.TempExtendDisableCounterForce(1.0f);
         }
     }
 
@@ -62,21 +83,6 @@ public class PlayerCollision : MonoBehaviour
             enemyDetect.SetEnemyAbleToDestroy(false);
         }
 
-        if (collision.gameObject.tag == "Enemy")
-        {
-            if (collision.gameObject.GetComponent<EnemyScipt>().IsAbleToBeDestroyed())
-            {
-                //rb.velocity = Vector2.zero;
-                playerController.SetGravityScale(0f);
-                Destroy(collision.gameObject);
-                playerController.ExtraJump();
-            }
-            else
-            {
-                Respawn();
-            }
-        }
-        
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -92,6 +98,8 @@ public class PlayerCollision : MonoBehaviour
             EnemyDetect enemyDetect = collision.gameObject.GetComponent<EnemyDetect>();
             enemyDetect.SetEnemyAbleToDestroy(true);
         }
+
+
     }
 
     private void Respawn()

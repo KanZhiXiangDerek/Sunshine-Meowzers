@@ -61,8 +61,8 @@ PolygonCollider2D:
     m_Paths:
     - - {x: 0.23443387, y: 0.28054303}
       - {x: -0.22074871, y: 0.27665496}
-      - {x: -0.6169753, y: -0.21152435}
-      - {x: 0.69064283, y: -0.21233408}
+      - {x: -1.1861453, y: 0.096255496}
+      - {x: 1.2420263, y: 0.09978069}
 --- !u!114 &1110028826018978163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,7 +283,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -452,7 +452,7 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_Vertices:
-  - position: {x: 0.6936601, y: -0.21149996, z: 0}
+  - position: {x: 1.2361509, y: 0.1006149, z: 0}
     color: {r: 0, g: 0, b: 0, a: 1}
     uv: {x: 0, y: 0}
   - position: {x: -0.2074266, y: 0.27158403, z: 0}
@@ -461,13 +461,13 @@ MonoBehaviour:
   - position: {x: 0.23142958, y: 0.2690839, z: 0}
     color: {r: 0, g: 0, b: 0, a: 1}
     uv: {x: 0, y: 0}
-  - position: {x: -0.6406551, y: -0.20966035, z: 0}
+  - position: {x: -1.1831443, y: 0.100287035, z: 0}
     color: {r: 0, g: 0, b: 0, a: 1}
     uv: {x: 0, y: 0}
-  - position: {x: -0.6406551, y: -0.20966035, z: 0}
+  - position: {x: -1.1831443, y: 0.100287035, z: 0}
     color: {r: 0, g: 0, b: 0, a: 1}
     uv: {x: 0, y: 0}
-  - position: {x: 0.6936601, y: -0.21149996, z: 0}
+  - position: {x: 1.2361509, y: 0.1006149, z: 0}
     color: {r: 0, g: 0, b: 0, a: 1}
     uv: {x: 0, y: 0}
   - position: {x: 0.23142958, y: 0.2690839, z: 0}
@@ -476,10 +476,10 @@ MonoBehaviour:
   - position: {x: -0.2074266, y: 0.27158403, z: 0}
     color: {r: 0, g: 0, b: 0, a: 1}
     uv: {x: 0, y: 0}
-  - position: {x: -0.6406, y: -0.2096, z: 0}
+  - position: {x: -1.1831, y: 0.1002, z: 0}
     color: {r: 0, g: 0, b: 0, a: 0}
     uv: {x: 0, y: 0}
-  - position: {x: 0.6936, y: -0.2114, z: 0}
+  - position: {x: 1.2361, y: 0.1006, z: 0}
     color: {r: 0, g: 0, b: 0, a: 0}
     uv: {x: 0, y: 0}
   - position: {x: 0.2314, y: 0.269, z: 0}
@@ -490,8 +490,8 @@ MonoBehaviour:
     uv: {x: 0, y: 0}
   m_Triangles: 000001000200010000000300040008000800040005000900040008000900050006000a00050009000a00060007000b0006000a000b0008000400070008000b000700
   m_LocalBounds:
-    m_Center: {x: 0.02650249, y: 0.030042037, z: 0}
-    m_Extent: {x: 0.6671576, y: 0.241542, z: 0}
+    m_Center: {x: 0.026503265, y: 0.18589202, z: 0}
+    m_Extent: {x: 1.2096477, y: 0.08569202, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -502,7 +502,7 @@ MonoBehaviour:
   m_ShapeLightFalloffSize: 0
   m_ShapeLightFalloffOffset: {x: 0, y: 0}
   m_ShapePath:
-  - {x: -0.6406551, y: -0.20966035, z: 0}
-  - {x: 0.6936601, y: -0.21149996, z: 0}
+  - {x: -1.1831443, y: 0.100287035, z: 0}
+  - {x: 1.2361509, y: 0.1006149, z: 0}
   - {x: 0.23142958, y: 0.2690839, z: 0}
   - {x: -0.2074266, y: 0.27158403, z: 0}

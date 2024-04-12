@@ -41,7 +41,7 @@ public class Trajectory : MonoBehaviour
         {
             pos.x = (playerPos.x + force.x * timeStamp);
             pos.y = (playerPos.y + force.y * timeStamp) - (Physics2D.gravity.magnitude * gravityMutipler * timeStamp * timeStamp) /2f;
-            Debug.Log("Gravity Magnitude" + Physics2D.gravity.magnitude);
+          
 
             dotsList[i].position = pos;
             timeStamp += dotSpacing;
