@@ -6,7 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     [Header("References"), Space(10)]
     [SerializeField] private Camera cam;
-    
+    [SerializeField] private GameObject playerSprite;
+    [SerializeField] private Animator playerAnim;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private LayerMask whatIsEnemy;
@@ -45,6 +46,7 @@ public class PlayerController : MonoBehaviour
     Vector2 startPoint;
     Vector2 currentPoint;
     Vector2 endPoint;
+    Vector2 direction;
 
     bool canTimeSlow = true;
 
@@ -65,6 +67,45 @@ public class PlayerController : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
         isNearEnemy = Physics2D.OverlapCircle(transform.position, enemyCheckRadius, whatIsEnemy);
 
+        if (!isGrounded)
+        {
+            float rotationSpeed = 10f + (projectileSpeed / 10);
+            float offset = 90f;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            Quaternion rotation = Quaternion.AngleAxis(angle + offset, Vector3.forward);
+            playerSprite.transform.rotation = Quaternion.Slerp(playerSprite.transform.rotation, rotation, rotationSpeed * Time.deltaTime);
+            if (playerSprite.transform.rotation.z >= 0.001f)
+            {
+                playerSprite.GetComponent<SpriteRenderer>().flipX = true;
+            }
+            else
+            {
+                playerSprite.GetComponent<SpriteRenderer>().flipX = false;
+            }
+
+        }
+        else
+        {
+            float rotationSpeed = 10f;
+            float offset = 0f;
+            float angle = 0;
+            Quaternion rotation = Quaternion.AngleAxis(angle + offset, Vector3.forward);
+            playerSprite.transform.rotation = Quaternion.Slerp(playerSprite.transform.rotation, rotation, rotationSpeed * Time.deltaTime);
+
+            //Vector2 currentMousePoint = cam.ScreenToWorldPoint(Input.mousePosition);
+            //Vector2 currentPos = new Vector2(transform.position.x, transform.position.z);
+            //float angleToMouse = Vector2.Angle(currentMousePoint - currentPos, Vector2.right);
+            //Debug.Log(angleToMouse);
+            //if (angleToMouse >= 90f)
+            //{
+            //    playerSprite.GetComponent<SpriteRenderer>().flipX = true;
+            //}
+            //else
+            //{
+            //    playerSprite.GetComponent<SpriteRenderer>().flipX = false;
+            //}
+        }
+
 
 
         currentTimeToNextSlow -= Time.deltaTime;
@@ -72,14 +113,15 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             startPoint = cam.ScreenToWorldPoint(Input.mousePosition);
-
+            playerAnim.ResetTrigger("IsLanding");
+            playerAnim.SetTrigger("IsAiming");
             trajectory.ShowDot();
         }
 
         if (Input.GetKey(KeyCode.Mouse0))
         {
             currentPoint = cam.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 direction = (currentPoint - startPoint).normalized; // Calculate the direction vector
+            direction = (currentPoint - startPoint).normalized; // Calculate the direction vector
             float tempDragDistance = Vector2.Distance(currentPoint, startPoint);
             tempDragDistance = Mathf.Clamp(tempDragDistance, 6, 16);
             float currentForce = tempDragDistance * 2.5f;
@@ -101,9 +143,10 @@ public class PlayerController : MonoBehaviour
         {
             trajectory.HideDot();
             endPoint = cam.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 direction = (endPoint - startPoint).normalized; // Calculate the direction vector
+            direction = (endPoint - startPoint).normalized; // Calculate the direction vector
             RaycastHit2D hit = Physics2D.BoxCast(rayCastPos.position, enemyCheckBox, 90f, -direction, enemyCheckRadius, whatIsEnemy);
-
+            playerAnim.ResetTrigger("IsAiming");
+            playerAnim.SetTrigger("IsJumping");
             if (isGrounded || isAbleToExtraJump || isNearEnemy)
             {
                 Vector2 adjustedDir;
@@ -211,5 +254,15 @@ public class PlayerController : MonoBehaviour
     public void TempExtendDisableCounterForce(float timer)
     {
         StartCoroutine(TempDisableCounterForce(timer));
+    }
+
+    public void AnimTrigger(string animTriggerName)
+    {
+        playerAnim.SetTrigger(animTriggerName);
+    }
+
+    public void ResetAnimTrigger(string animTriggerName)
+    {
+        playerAnim.ResetTrigger(animTriggerName);
     }
 }

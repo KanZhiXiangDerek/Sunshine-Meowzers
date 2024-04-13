@@ -16,6 +16,8 @@ public class PlayerCollision : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ground")
         {
+            playerController.AnimTrigger("IsLanding");
+            playerController.ResetAnimTrigger("IsJumping");
             rb.velocity = rb.velocity / 10f;
             playerController.SetGravityScale(0f);
         }
