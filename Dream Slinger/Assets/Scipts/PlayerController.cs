@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask whatIsEnemy;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Transform rayCastPos;
+    [SerializeField] private PlayerSoundManager playerSM;
+
 
     [Header("Drag And Shoot Stats"), Space(10)]
     [SerializeField] private Trajectory trajectory;
@@ -47,6 +49,7 @@ public class PlayerController : MonoBehaviour
     Vector2 currentPoint;
     Vector2 endPoint;
     Vector2 direction;
+    Vector3 preJumpPos;
 
     bool canTimeSlow = true;
 
@@ -116,10 +119,12 @@ public class PlayerController : MonoBehaviour
             playerAnim.ResetTrigger("IsLanding");
             playerAnim.SetTrigger("IsAiming");
             trajectory.ShowDot();
+         
         }
 
         if (Input.GetKey(KeyCode.Mouse0))
         {
+               preJumpPos = transform.position;
             currentPoint = cam.ScreenToWorldPoint(Input.mousePosition);
             direction = (currentPoint - startPoint).normalized; // Calculate the direction vector
             float tempDragDistance = Vector2.Distance(currentPoint, startPoint);
@@ -141,6 +146,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
+        
             trajectory.HideDot();
             endPoint = cam.ScreenToWorldPoint(Input.mousePosition);
             direction = (endPoint - startPoint).normalized; // Calculate the direction vector
@@ -174,6 +180,7 @@ public class PlayerController : MonoBehaviour
                 }
                 StartCoroutine(CounterForce(adjustedDir, projectileSpeed));
                 rb.AddForce(-adjustedDir * projectileSpeed, ForceMode2D.Impulse);
+                playerSM.PlayerJumpSFX(new Vector3(preJumpPos.x, preJumpPos.y,-10));
             }
         }
     }

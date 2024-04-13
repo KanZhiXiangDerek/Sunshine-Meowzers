@@ -409,6 +409,8 @@ GameObject:
   - component: {fileID: 965696543}
   - component: {fileID: 965696544}
   - component: {fileID: 965696545}
+  - component: {fileID: 1714548231}
+  - component: {fileID: 1714548230}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -449,6 +451,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
+  playerSprite: {fileID: 4564481232012740498}
+  playerAnim: {fileID: 4784711813066970387}
   rb: {fileID: 4564481232395112395}
   whatIsGround:
     serializedVersion: 2
@@ -458,6 +462,7 @@ MonoBehaviour:
     m_Bits: 128
   groundCheck: {fileID: 4564481232395112398}
   rayCastPos: {fileID: 1128927017}
+  playerSM: {fileID: 1714548230}
   trajectory: {fileID: 965696545}
   projectileSpeed: 0
   minProjectileSpd: 8
@@ -525,6 +530,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 4564481232395112397}
+  playerSM: {fileID: 1714548230}
   rb: {fileID: 4564481232395112395}
 --- !u!96 &965696544
 TrailRenderer:
@@ -650,3 +656,33 @@ MonoBehaviour:
   dotPrefab: {fileID: 152855694}
   dotParent: {fileID: 1127973364}
   dotSpacing: 0.05
+--- !u!81 &1714548231
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4564481232395112394}
+  m_Enabled: 1
+--- !u!114 &1714548230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4564481232395112394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd0d15d515f951a4b8e36f58cb833d6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerJump:
+  - {fileID: 11400000, guid: 9cd1164098d7a124da25561374a5cde9, type: 2}
+  - {fileID: 11400000, guid: 59a186b91f1240144b3654fe98eca1a0, type: 2}
+  - {fileID: 11400000, guid: a06778671857cbe4c8397db03b73bea7, type: 2}
+  - {fileID: 11400000, guid: 2bf540d7fc690cc4a91995105c0e641d, type: 2}
+  playerLand:
+  - {fileID: 11400000, guid: e0ceddfdd21d45b40886c3c6de37079e, type: 2}
+  - {fileID: 11400000, guid: cf86ce010fb149342b7643a7d0aee7b2, type: 2}
+  - {fileID: 11400000, guid: c10916529d813794d936bcea16c6139e, type: 2}
+  - {fileID: 11400000, guid: be0dcf2cd38f8724cbee5fd1b16425f7, type: 2}

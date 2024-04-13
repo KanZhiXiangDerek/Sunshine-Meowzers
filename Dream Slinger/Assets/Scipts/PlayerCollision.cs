@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerCollision : MonoBehaviour
 {
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private PlayerSoundManager playerSM;
     [SerializeField] private Rigidbody2D rb;
     private Vector2 spawnPos;
 
@@ -16,6 +17,7 @@ public class PlayerCollision : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ground")
         {
+            playerSM.PlayerLandSFX(new Vector3(transform.position.x, transform.position.y, -10));
             playerController.AnimTrigger("IsLanding");
             playerController.ResetAnimTrigger("IsJumping");
             rb.velocity = rb.velocity / 10f;
