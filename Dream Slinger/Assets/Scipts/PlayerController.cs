@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Transform rayCastPos;
     [SerializeField] private PlayerSoundManager playerSM;
+    [SerializeField] private GameObject dashEffect;
 
 
     [Header("Drag And Shoot Stats"), Space(10)]
@@ -181,6 +182,10 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(CounterForce(adjustedDir, projectileSpeed));
                 rb.AddForce(-adjustedDir * projectileSpeed, ForceMode2D.Impulse);
                 playerSM.PlayerJumpSFX(new Vector3(preJumpPos.x, preJumpPos.y,-10));
+
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                Quaternion rotation = Quaternion.AngleAxis(angle + 90f, Vector3.forward);
+                SpawnDashEffect(rotation, 1 + (projectileSpeed/10));
             }
         }
     }
@@ -271,5 +276,16 @@ public class PlayerController : MonoBehaviour
     public void ResetAnimTrigger(string animTriggerName)
     {
         playerAnim.ResetTrigger(animTriggerName);
+    }
+
+    public Quaternion GetPlayerRotation()
+    {
+        return playerSprite.transform.rotation;
+    }
+    public void SpawnDashEffect(Quaternion dir, float scaleMutipler)
+    {
+        GameObject effect = Instantiate(dashEffect, transform.position, dir);
+        effect.transform.localScale = new Vector3(effect.transform.localScale.x * scaleMutipler, effect.transform.localScale.y * scaleMutipler, effect.transform.localScale.z);
+        Destroy(effect, 3.0f);
     }
 }
