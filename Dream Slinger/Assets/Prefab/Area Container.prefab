@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5773250415211273052}
   - component: {fileID: 5773250415211273055}
-  - component: {fileID: 5773250415211273053}
   m_Layer: 0
   m_Name: Area Container
   m_TagString: Area
@@ -63,19 +62,6 @@ PolygonCollider2D:
       - {x: 36, y: -21}
       - {x: -36, y: -21}
       - {x: -36, y: 21}
---- !u!114 &5773250415211273053
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5773250415211273054}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61bb054f8747a964e95cf611e2d9f282, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  camera: {fileID: 5773250416623614234}
 --- !u!1 &5773250415749412084
 GameObject:
   m_ObjectHideFlags: 0

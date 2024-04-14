@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - EnemyDetection
   - Checkpoint
+  - EndPoint
   layers:
   - Default
   - TransparentFX

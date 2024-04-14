@@ -52,7 +52,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -467,9 +467,9 @@ MonoBehaviour:
   trajectory: {fileID: 965696545}
   projectileSpeed: 0
   minProjectileSpd: 8
-  maxProjectileSpd: 32
+  maxProjectileSpd: 36
   enemyDashMutipler: 2
-  enemyCheckBox: {x: 0.2, y: 10}
+  enemyCheckBox: {x: 0.02, y: 15}
   enemyCheckRadius: 15
   counterForceScale: 0.33
   xShootScale: 1

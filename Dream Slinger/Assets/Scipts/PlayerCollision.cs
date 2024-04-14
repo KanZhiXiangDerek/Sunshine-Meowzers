@@ -20,7 +20,7 @@ public class PlayerCollision : MonoBehaviour
             playerSM.PlayerLandSFX(new Vector3(transform.position.x, transform.position.y, -10));
             playerController.AnimTrigger("IsLanding");
             playerController.ResetAnimTrigger("IsJumping");
-            rb.velocity = rb.velocity / 10f;
+            rb.velocity = Vector2.zero;
             playerController.SetGravityScale(0f);
         }
         if (collision.gameObject.tag == "Obstacle")
@@ -63,7 +63,7 @@ public class PlayerCollision : MonoBehaviour
             rb.velocity = Vector2.zero;
             rb.gravityScale = 0;
             playerController.SetGravityScale(0f);
-            playerController.TempExtendDisableCounterForce(1.0f);
+            playerController.TempExtendDisableCounterForce(1.5f);
         }
     }
 
@@ -72,13 +72,14 @@ public class PlayerCollision : MonoBehaviour
         if (collision.gameObject.tag == "Area")
         {
             AreaManager areaMan = collision.gameObject.GetComponent<AreaManager>();
-            areaMan.SetCamera(true);
+            spawnPos = areaMan.GetCheckPointPos();
+
+
         }
 
-        if (collision.gameObject.tag == "Checkpoint")
+        if (collision.gameObject.tag == "EndPoint")
         {
-
-            spawnPos = collision.gameObject.transform.position;
+            GameMan.instance.NextLevel();
         }
 
         if (collision.gameObject.tag == "EnemyDetection")
@@ -91,11 +92,11 @@ public class PlayerCollision : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Area")
-        {
-            AreaManager areaMan = collision.gameObject.GetComponent<AreaManager>();
-            areaMan.SetCamera(false);
-        }
+        //if (collision.gameObject.tag == "Area")
+        //{
+        //    AreaManager areaMan = collision.gameObject.GetComponent<AreaManager>();
+        //    areaMan.SetCamera(false, transform);
+        //}
 
         if (collision.gameObject.tag == "EnemyDetection")
         {
@@ -108,6 +109,7 @@ public class PlayerCollision : MonoBehaviour
 
     private void Respawn()
     {
+        GameMan.instance.SetLevel();
         transform.position = spawnPos;
     }
 }

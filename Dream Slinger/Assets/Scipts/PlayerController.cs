@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -57,6 +58,7 @@ public class PlayerController : MonoBehaviour
 
     float timeToNextTimeSlow = 0.5f;
     float currentTimeToNextSlow;
+    float ogCamSize;
 
     bool canCounterForce;
     void Start()
@@ -120,12 +122,12 @@ public class PlayerController : MonoBehaviour
             playerAnim.ResetTrigger("IsLanding");
             playerAnim.SetTrigger("IsAiming");
             trajectory.ShowDot();
-         
+
         }
 
         if (Input.GetKey(KeyCode.Mouse0))
         {
-               preJumpPos = transform.position;
+            preJumpPos = transform.position;
             currentPoint = cam.ScreenToWorldPoint(Input.mousePosition);
             direction = (currentPoint - startPoint).normalized; // Calculate the direction vector
             float tempDragDistance = Vector2.Distance(currentPoint, startPoint);
@@ -136,7 +138,7 @@ public class PlayerController : MonoBehaviour
             if (isNearEnemy && currentTimeToNextSlow <= 0 && !isGrounded)
             {
                 RaycastHit2D hit = Physics2D.BoxCast(rayCastPos.position, enemyCheckBox, 1f, -direction, whatIsEnemy);
-                if (hit.collider != null)
+                if (hit.collider != null && currentTimeToNextSlow <= 0)
                 {
                     GameMan.instance.TimeSlow();
                     currentTimeToNextSlow = timeToNextTimeSlow;
@@ -147,14 +149,14 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
-        
+
             trajectory.HideDot();
             endPoint = cam.ScreenToWorldPoint(Input.mousePosition);
             direction = (endPoint - startPoint).normalized; // Calculate the direction vector
-            RaycastHit2D hit = Physics2D.BoxCast(rayCastPos.position, enemyCheckBox, 90f, -direction, enemyCheckRadius, whatIsEnemy);
+            RaycastHit2D hit = Physics2D.BoxCast(rayCastPos.position, enemyCheckBox, 1f, -direction, enemyCheckRadius, whatIsEnemy);
             playerAnim.ResetTrigger("IsAiming");
             playerAnim.SetTrigger("IsJumping");
-            if (isGrounded || isAbleToExtraJump || isNearEnemy)
+            if (isGrounded || isNearEnemy || isAbleToExtraJump)
             {
                 Vector2 adjustedDir;
                 rb.velocity = rb.velocity * 0.01f;
@@ -166,46 +168,49 @@ public class PlayerController : MonoBehaviour
 
                 gravityScale = 0;
 
-                if (hit && isNearEnemy && !isGrounded)
+                if (hit && isNearEnemy)
                 {
                     Vector2 enemyDirection = (transform.position - hit.transform.position).normalized; // Calculate the direction vector
                     Debug.Log(enemyDirection);
                     adjustedDir = enemyDirection;
                     projectileSpeed *= enemyDashMutipler;
                     projectileSpeed = Mathf.Clamp(projectileSpeed, 60f, 80f);
+                    GameMan.instance.SlowDownLengthReduce(4f);
                     StartCoroutine(TempDisableCounterForce(0.8f));
+
+                    StartCoroutine(CounterForce(adjustedDir, projectileSpeed));
+                    rb.AddForce(-adjustedDir * projectileSpeed, ForceMode2D.Impulse);
+                    Debug.Log("Projectile Speed " + projectileSpeed);
+                    playerSM.PlayerJumpSFX(new Vector3(preJumpPos.x, preJumpPos.y, -10));
                 }
-                else
+                else if (!hit && isGrounded || isAbleToExtraJump)
                 {
                     adjustedDir = new Vector2(direction.x * xShootScale, direction.y * yShootScale);
+
+                    StartCoroutine(CounterForce(adjustedDir, projectileSpeed));
+                    rb.AddForce(-adjustedDir * projectileSpeed, ForceMode2D.Impulse);
+                    Debug.Log("Projectile Speed " + projectileSpeed);
+                    playerSM.PlayerJumpSFX(new Vector3(preJumpPos.x, preJumpPos.y, -10));
                 }
-                StartCoroutine(CounterForce(adjustedDir, projectileSpeed));
-                rb.AddForce(-adjustedDir * projectileSpeed, ForceMode2D.Impulse);
-                playerSM.PlayerJumpSFX(new Vector3(preJumpPos.x, preJumpPos.y,-10));
 
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 Quaternion rotation = Quaternion.AngleAxis(angle + 90f, Vector3.forward);
-                SpawnDashEffect(rotation, 1 + (projectileSpeed/10));
+                SpawnDashEffect(rotation, 1 + (projectileSpeed / 10));
             }
         }
     }
 
     private void FixedUpdate()
     {
-        //if (isPlayerGainGravity)
-        //{
+
         rb.AddForce(Physics2D.gravity * gravityScale, ForceMode2D.Force);
         gravityScale += Mathf.Pow(currentGravityGainSpeed, 6 / 2.5f) * Time.fixedDeltaTime;
         if (gravityScale >= maxGravityScale)
         {
             gravityScale = maxGravityScale;
-            //isPlayerGainGravity = false;
+
         }
-        //}
-        //else
-        //{
-        //    gravityScale = 0;
-        //}
+
     }
     IEnumerator CounterForce(Vector2 dir, float force)
     {
@@ -284,6 +289,7 @@ public class PlayerController : MonoBehaviour
     }
     public void SpawnDashEffect(Quaternion dir, float scaleMutipler)
     {
+        scaleMutipler = Mathf.Clamp(scaleMutipler, 1.2f, 2.4f);
         GameObject effect = Instantiate(dashEffect, transform.position, dir);
         effect.transform.localScale = new Vector3(effect.transform.localScale.x * scaleMutipler, effect.transform.localScale.y * scaleMutipler, effect.transform.localScale.z);
         Destroy(effect, 3.0f);

@@ -7,21 +7,25 @@ public class TimeMan : MonoBehaviour
     [SerializeField] private float slowDownFactor = 0.5f;
     [SerializeField] private float slowDownLength = 2.0f;
     private float reduceSlowNo = 1.0f;
-
+    float originalFixedDeltaTime;
     private void Start()
     {
         Time.timeScale = 1;
+        originalFixedDeltaTime = Time.fixedDeltaTime;
+        Debug.Log(originalFixedDeltaTime);
     }
+
     void Update()
     {
         Time.timeScale += (1 / (slowDownLength / reduceSlowNo)) * Time.unscaledDeltaTime;
         Time.timeScale = Mathf.Clamp(Time.timeScale, 0, 1);
-
+      
         if (Time.timeScale >= 1)
         {
             Time.timeScale = 1;
         }
     }
+
 
     public void TimeSlowDown()
     {
@@ -43,6 +47,6 @@ public class TimeMan : MonoBehaviour
     public void GamePause()
     {
         Time.timeScale = 0f;
-        Debug.Log(Time.timeScale);
+        //Debug.Log(Time.timeScale);
     }
 }
