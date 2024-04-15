@@ -30,11 +30,11 @@ public class PlayerCollision : MonoBehaviour
 
         if (collision.gameObject.tag == "Enemy")
         {
+            rb.velocity = Vector2.zero;
             transform.position = Vector2.MoveTowards(transform.position, collision.transform.position, 50f * Time.deltaTime);
             if (collision.gameObject.GetComponent<EnemyScipt>().IsAbleToBeDestroyed())
             {
                 Destroy(collision.gameObject);
-                playerController.ExtraJump();
             }
             else
             {
@@ -60,10 +60,10 @@ public class PlayerCollision : MonoBehaviour
         }
         if (collision.gameObject.tag == "Enemy")
         {
-            rb.velocity = Vector2.zero;
             rb.gravityScale = 0;
             playerController.SetGravityScale(0f);
             playerController.TempExtendDisableCounterForce(1.5f);
+            playerController.ExtraJump();
         }
     }
 

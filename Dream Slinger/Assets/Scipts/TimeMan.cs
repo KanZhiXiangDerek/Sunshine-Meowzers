@@ -27,8 +27,9 @@ public class TimeMan : MonoBehaviour
     }
 
 
-    public void TimeSlowDown()
+    public void TimeSlowDown(float slowDownNumber)
     {
+        slowDownFactor = slowDownNumber;
         reduceSlowNo = 1.0f;
         Time.timeScale = slowDownFactor;
         Time.fixedDeltaTime = Time.timeScale * 0.2f;

@@ -34,9 +34,9 @@ public class GameMan : MonoBehaviour
 
     }
 
-    public void TimeSlow()
+    public void TimeSlow(float slowDownNumber)
     {
-        timeManager.TimeSlowDown();
+        timeManager.TimeSlowDown(slowDownNumber);
     }
 
     public void ResetTimeScale()
