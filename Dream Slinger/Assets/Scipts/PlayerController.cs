@@ -60,6 +60,10 @@ public class PlayerController : MonoBehaviour
     float ogCamSize;
 
 
+    private void Awake()
+    {
+        cam = Camera.main.GetComponent<Camera>();
+    }
     void Start()
     {
         currentGravityGainSpeed = gravityGainSpeed;
@@ -98,10 +102,6 @@ public class PlayerController : MonoBehaviour
             playerSprite.transform.rotation = Quaternion.Slerp(playerSprite.transform.rotation, rotation, rotationSpeed * Time.deltaTime);
         }
 
-
-
-        currentTimeToNextSlow -= Time.deltaTime;
-
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             startPoint = cam.ScreenToWorldPoint(Input.mousePosition);
@@ -121,17 +121,15 @@ public class PlayerController : MonoBehaviour
             float currentForce = tempDragDistance * 2.5f;
             trajectory.UpdateDots(transform.position, (-direction * currentForce), 3f);
 
-
-            if (isNearEnemy && currentTimeToNextSlow <= 0 && !isGrounded && canTimeSlow)
+            if (isNearEnemy && !isGrounded && canTimeSlow)
             {
-                RaycastHit2D hit = Physics2D.BoxCast(rayCastPos.position, enemyCheckBox, 1f, -direction, whatIsEnemy);
-                if (hit.collider != null && currentTimeToNextSlow <= 0)
+                RaycastHit2D hit = Physics2D.BoxCast(rayCastPos.position, enemyCheckBox, 0f, -direction, enemyCheckRadius, whatIsEnemy);
+                if (hit.collider != null)
                 {
                     GameMan.instance.TimeSlow(0.01f);
-                    StartCoroutine(TempDisableTimeSlow(1.0f));
+                    canTimeSlow = false;
                 }
             }
-
         }
 
         if (Input.GetKeyUp(KeyCode.Mouse0))
@@ -139,12 +137,12 @@ public class PlayerController : MonoBehaviour
 
             trajectory.HideDot();
             endPoint = cam.ScreenToWorldPoint(Input.mousePosition);
-            direction = (endPoint - startPoint).normalized; // Calculate the direction vector
-            RaycastHit2D hit = Physics2D.BoxCast(rayCastPos.position, enemyCheckBox, 0.1f, -direction, enemyCheckRadius, whatIsEnemy);
+            direction = (endPoint - startPoint).normalized; // Calculate the direction vector\
+            //RaycastHit2D hit = Physics2D.Raycast(rayCastPos.position, -direction, enemyCheckRadius, whatIsEnemy);
+            RaycastHit2D hit = Physics2D.BoxCast(rayCastPos.position, enemyCheckBox, 0f, -direction, enemyCheckRadius, whatIsEnemy);
             playerAnim.ResetTrigger("IsAiming");
             playerAnim.SetTrigger("IsJumping");
-            //if (isGrounded || isNearEnemy || isAbleToExtraJump)
-            //{
+
             Vector2 adjustedDir;
             dragDistance = Vector2.Distance(endPoint, startPoint);
             Debug.DrawLine(startPoint, endPoint);
@@ -154,8 +152,11 @@ public class PlayerController : MonoBehaviour
 
             gravityScale = 0;
 
-            if (hit && isNearEnemy || hit && isGrounded || hit  && isAbleToExtraJump)
+            if (hit.collider && isNearEnemy || hit.collider && isGrounded || hit.collider && isAbleToExtraJump)
             {
+                Debug.DrawLine(rayCastPos.position, hit.collider.transform.position, Color.red);
+                isAbleToExtraJump = false;
+                Debug.Log("Hit Object" + hit.collider.name);
                 Vector2 enemyDirection = (transform.position - hit.transform.position).normalized; // Calculate the direction vector
                 adjustedDir = enemyDirection;
                 StartCoroutine(TempDisableCounterForce(1.0f));
@@ -163,9 +164,16 @@ public class PlayerController : MonoBehaviour
                 rb.AddForce(-adjustedDir * enemyDashSpeed, ForceMode2D.Impulse);
                 Debug.Log("Enemy Dash Spd " + enemyDashSpeed);
                 playerSM.PlayerJumpSFX(new Vector3(preJumpPos.x, preJumpPos.y, -10));
+
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                Quaternion rotation = Quaternion.AngleAxis(angle + 90f, Vector3.forward);
+                SpawnDashEffect(rotation, 1 + (projectileSpeed / 10));
+                GameMan.instance.ResetTimeScale();
+
             }
             else if (!hit && isGrounded || !hit && isAbleToExtraJump)
             {
+                isAbleToExtraJump = false;
                 adjustedDir = new Vector2(direction.x * xShootScale, direction.y * yShootScale);
 
                 StartCoroutine(CounterForce(adjustedDir, projectileSpeed));
@@ -173,13 +181,15 @@ public class PlayerController : MonoBehaviour
                 rb.AddForce(-adjustedDir * projectileSpeed, ForceMode2D.Impulse);
                 Debug.Log("Projectile Speed " + projectileSpeed);
                 playerSM.PlayerJumpSFX(new Vector3(preJumpPos.x, preJumpPos.y, -10));
+
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                Quaternion rotation = Quaternion.AngleAxis(angle + 90f, Vector3.forward);
+                SpawnDashEffect(rotation, 1 + (projectileSpeed / 10));
+                GameMan.instance.ResetTimeScale();
+
             }
 
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            Quaternion rotation = Quaternion.AngleAxis(angle + 90f, Vector3.forward);
-            SpawnDashEffect(rotation, 1 + (projectileSpeed / 10));
-            GameMan.instance.ResetTimeScale();
-            //}
+            canTimeSlow = true;
         }
     }
 
@@ -228,7 +238,7 @@ public class PlayerController : MonoBehaviour
     }
     public void ExtraJump()
     {
-        StartCoroutine(EnableExtraJump(1.0f));
+        StartCoroutine(EnableExtraJump(2.5f));
     }
     private IEnumerator EnableExtraJump(float timePeriod)
     {
@@ -237,13 +247,16 @@ public class PlayerController : MonoBehaviour
         isAbleToExtraJump = false;
     }
 
-    //public void timeSlowPlayer(float value)
-    //{
-    //    if (canTimeSlow)
-    //    {
-    //        GameMan.instance.TimeSlow(value);
-    //    }
-    //}
+    private IEnumerator TempZeroGravity(float timePeriod)
+    {
+        gravityScale = 0;
+        yield return new WaitForSeconds(timePeriod);
+    }
+
+    public void SetZeroGravity(float timePeriod)
+    {
+        StartCoroutine(TempZeroGravity(timePeriod));
+    }
 
     public void SetGravityScale(float newGravityScale)
     {
@@ -290,5 +303,17 @@ public class PlayerController : MonoBehaviour
         GameObject effect = Instantiate(dashEffect, transform.position, dir);
         effect.transform.localScale = new Vector3(effect.transform.localScale.x * scaleMutipler, effect.transform.localScale.y * scaleMutipler, effect.transform.localScale.z);
         Destroy(effect, 3.0f);
+    }
+
+    public void ReflectForce(float force)
+    {
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, Mathf.Infinity))
+        {
+            // Calculate reflection vector
+            Vector2 reflection = Vector3.Reflect(transform.forward, hit.normal);
+
+            // Apply force to the Rigidbody
+            GetComponent<Rigidbody>().AddForce(reflection * force);
+        }
     }
 }

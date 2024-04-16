@@ -30,8 +30,9 @@ public class PlayerCollision : MonoBehaviour
 
         if (collision.gameObject.tag == "Enemy")
         {
-            rb.velocity = Vector2.zero;
-            transform.position = Vector2.MoveTowards(transform.position, collision.transform.position, 50f * Time.deltaTime);
+            playerController.ReflectForce(100f);
+            //rb.velocity = Vector2.zero;
+            //transform.position = Vector2.MoveTowards(transform.position, collision.transform.position, 50f * Time.deltaTime);
             if (collision.gameObject.GetComponent<EnemyScipt>().IsAbleToBeDestroyed())
             {
                 Destroy(collision.gameObject);
@@ -49,7 +50,7 @@ public class PlayerCollision : MonoBehaviour
         {
             playerController.SetGravityGainSpeedOnGround();
         }
-       
+
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -61,8 +62,9 @@ public class PlayerCollision : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             rb.gravityScale = 0;
-            playerController.SetGravityScale(0f);
+            //playerController.SetGravityScale(0f);
             playerController.TempExtendDisableCounterForce(1.5f);
+            playerController.SetZeroGravity(1.0f);
             playerController.ExtraJump();
         }
     }
@@ -77,6 +79,16 @@ public class PlayerCollision : MonoBehaviour
 
         }
 
+        if (collision.gameObject.tag == "Platform")
+        {
+
+            MovingPlatform plat = collision.gameObject.GetComponent<MovingPlatform>();
+            if (plat.GetWait() == false)
+                transform.position = Vector2.MoveTowards(transform.position, collision.transform.position, 100f * Time.deltaTime);
+
+        }
+
+
         if (collision.gameObject.tag == "EndPoint")
         {
             GameMan.instance.NextLevel();
@@ -90,13 +102,26 @@ public class PlayerCollision : MonoBehaviour
 
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Platform")
+        {
+            MovingPlatform plat = collision.gameObject.GetComponent<MovingPlatform>();
+            plat.MoveToWayPoint();
+            if (plat.GetWait() == false)
+            {
+                transform.position = collision.transform.position;
+            }
+        }
+    }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        //if (collision.gameObject.tag == "Area")
-        //{
-        //    AreaManager areaMan = collision.gameObject.GetComponent<AreaManager>();
-        //    areaMan.SetCamera(false, transform);
-        //}
+        if (collision.gameObject.tag == "Platform")
+        {
+            playerController.SetZeroGravity(1.0f);
+            rb.velocity = Vector2.zero;
+            playerController.ExtraJump();
+        }
 
         if (collision.gameObject.tag == "EnemyDetection")
         {

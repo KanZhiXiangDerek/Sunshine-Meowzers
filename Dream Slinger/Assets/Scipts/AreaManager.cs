@@ -4,17 +4,31 @@ using UnityEngine;
 using Cinemachine;
 public class AreaManager : MonoBehaviour
 {
-    [SerializeField] GameObject camera;
+    [SerializeField] GameObject cam;
+    [SerializeField] CinemachineVirtualCamera vcam;
+    [SerializeField] bool followPlayer;
     [SerializeField] Transform checkPoint;
-    
+    GameObject player;
+
+
     void Start()
     {
-        SetCamera(false);
+        SetCamera(true);
+        if (followPlayer)
+        {
+            Invoke("SetFollowPlayer", 0.1f);
+        }
     }
 
     public void SetCamera(bool boolean)
     {
-        camera.SetActive(boolean);
+        cam.SetActive(boolean);
+    }
+
+    public void SetFollowPlayer()
+    {
+        player = GameMan.instance.GetPlayerObj();
+        vcam.Follow = player.transform;
     }
 
     public Vector2 GetCheckPointPos()

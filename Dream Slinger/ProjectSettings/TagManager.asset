@@ -11,6 +11,8 @@ TagManager:
   - EnemyDetection
   - Checkpoint
   - EndPoint
+  - SlowDownArea
+  - Platform
   layers:
   - Default
   - TransparentFX
@@ -47,4 +49,22 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 1901642451
+    locked: 0
+  - name: Foreground
+    uniqueID: 1132935897
+    locked: 0
+  - name: Enemies
+    uniqueID: 1316112437
+    locked: 0
+  - name: Interactable
+    uniqueID: 3403424301
+    locked: 0
+  - name: Effects
+    uniqueID: 618097869
+    locked: 0
+  - name: Player
+    uniqueID: 1419039383
     locked: 0

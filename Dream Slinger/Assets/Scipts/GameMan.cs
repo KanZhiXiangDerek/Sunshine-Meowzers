@@ -6,9 +6,10 @@ public class GameMan : MonoBehaviour
 {
     public static GameMan instance = null;
     [SerializeField] private GameObject player;
+    private GameObject currentPlayer;
     [SerializeField] private LevelContainer[] levels;
     GameObject currentLevelPrefab;
-    private int levelIndex;
+    [SerializeField] private int levelIndex;
     [SerializeField] private TimeMan timeManager;
     private void Awake()
     {
@@ -62,16 +63,26 @@ public class GameMan : MonoBehaviour
 
     public void NextLevel()
     {
-        if (levelIndex < levels.Length)
-            levelIndex += 1;
-        else
-            levelIndex = 0;
+        levelIndex = (levelIndex + 1) % levels.Length;
+        //if (levelIndex < levels.Length)
+        //    levelIndex += 1;
+        //else
+        //    levelIndex = 0;
         SetLevel();
+    }
+
+    public GameObject GetPlayerObj()
+    {
+        return currentPlayer;
     }
 
     public void ResetPlayerPos(Vector2 spawnPos)
     {
-        player.transform.position = spawnPos;
+        if(currentPlayer != null)
+        {
+            Destroy(currentPlayer);
+        }
+        currentPlayer = Instantiate(player.gameObject, spawnPos, Quaternion.identity);
         player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
 }

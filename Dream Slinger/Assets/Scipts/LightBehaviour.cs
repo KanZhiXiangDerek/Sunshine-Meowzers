@@ -9,6 +9,7 @@ public class LightBehaviour : MonoBehaviour
     [SerializeField] private float timeDelay;
     [SerializeField] private float[] intensity;
     [SerializeField] private float timeBtwIntensity = 3.0f;
+    [SerializeField] private bool adjustRadius = true;
     [SerializeField] private float[] radius;
     [SerializeField] private float timeBtwRadiusLerp = 3.0f;
     [SerializeField] private Color32[] colors;
@@ -26,7 +27,10 @@ public class LightBehaviour : MonoBehaviour
     private void ChangeLightProp()
     {
         StartCoroutine(ChangeColor());
-        StartCoroutine(ChangeRadius());
+        if (adjustRadius)
+        {
+            StartCoroutine(ChangeRadius());
+        }
         StartCoroutine(ChangeIntensity());
     }
 
