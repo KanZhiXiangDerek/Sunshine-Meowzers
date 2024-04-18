@@ -31,11 +31,13 @@ public class PlayerCollision : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             playerController.ReflectForce(100f);
-            //rb.velocity = Vector2.zero;
-            //transform.position = Vector2.MoveTowards(transform.position, collision.transform.position, 50f * Time.deltaTime);
+          
             if (collision.gameObject.GetComponent<EnemyScipt>().IsAbleToBeDestroyed())
             {
                 Destroy(collision.gameObject);
+                //GameMan.instance.TempRespawnPlayer(new Vector2(collision.gameObject.transform.position.x, collision.gameObject.transform.position.y + 0.5f));
+                playerController.ExtraJump();
+                
             }
             else
             {
@@ -59,14 +61,6 @@ public class PlayerCollision : MonoBehaviour
         {
             playerController.SetGravityGainSpeedToOG();
         }
-        if (collision.gameObject.tag == "Enemy")
-        {
-            rb.gravityScale = 0;
-            //playerController.SetGravityScale(0f);
-            playerController.TempExtendDisableCounterForce(1.5f);
-            playerController.SetZeroGravity(1.0f);
-            playerController.ExtraJump();
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -84,8 +78,9 @@ public class PlayerCollision : MonoBehaviour
 
             MovingPlatform plat = collision.gameObject.GetComponent<MovingPlatform>();
             if (plat.GetWait() == false)
+            {
                 transform.position = Vector2.MoveTowards(transform.position, collision.transform.position, 100f * Time.deltaTime);
-
+            }
         }
 
 
@@ -96,6 +91,7 @@ public class PlayerCollision : MonoBehaviour
 
         if (collision.gameObject.tag == "EnemyDetection")
         {
+            //Respawn();
             EnemyDetect enemyDetect = collision.gameObject.GetComponent<EnemyDetect>();
             enemyDetect.SetEnemyAbleToDestroy(false);
         }
@@ -126,7 +122,7 @@ public class PlayerCollision : MonoBehaviour
         if (collision.gameObject.tag == "EnemyDetection")
         {
             EnemyDetect enemyDetect = collision.gameObject.GetComponent<EnemyDetect>();
-            enemyDetect.SetEnemyAbleToDestroy(true);
+            enemyDetect.PostDetect();
         }
 
 

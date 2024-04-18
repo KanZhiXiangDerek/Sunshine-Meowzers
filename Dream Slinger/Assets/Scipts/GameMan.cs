@@ -85,5 +85,19 @@ public class GameMan : MonoBehaviour
         currentPlayer = Instantiate(player.gameObject, spawnPos, Quaternion.identity);
         player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
+
+    public void TempRespawnPlayer(Vector2 spawnPos)
+    {
+        if (currentPlayer != null)
+        {
+            Destroy(currentPlayer);
+        }
+
+        currentPlayer = Instantiate(player.gameObject, spawnPos, Quaternion.identity);
+
+        PlayerController playerController = currentPlayer.GetComponent<PlayerController>();
+        playerController.ExtraJump();
+        playerController.PlayerToStayInSamePos(spawnPos);
+    }
 }
 

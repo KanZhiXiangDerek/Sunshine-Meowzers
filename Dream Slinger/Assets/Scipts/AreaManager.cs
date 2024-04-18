@@ -20,6 +20,14 @@ public class AreaManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if(followPlayer & vcam.Follow == null)
+        {
+            SetFollowPlayer();
+        }
+    }
+
     public void SetCamera(bool boolean)
     {
         cam.SetActive(boolean);

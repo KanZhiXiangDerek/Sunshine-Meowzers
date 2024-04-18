@@ -10,4 +10,14 @@ public class EnemyDetect : MonoBehaviour
     {
         enemyScipt.SetAbleToDestroy(boolean);
     }
+
+    public void SetEnemyAbleToDestroyAfterXs(bool boolean)
+    {
+        enemyScipt.SetAbleToDestroyAfterXSeconds(boolean);
+    }
+
+    public void PostDetect()
+    {
+        enemyScipt.PostDetect();
+    }
 }

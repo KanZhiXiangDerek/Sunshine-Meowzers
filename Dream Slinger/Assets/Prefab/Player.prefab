@@ -603,18 +603,18 @@ MonoBehaviour:
     m_Bits: 64
   whatIsEnemy:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 640
   groundCheck: {fileID: 4564481232395112398}
   rayCastPos: {fileID: 1128927017}
   playerSM: {fileID: 1714548230}
   dashEffect: {fileID: 4244950183253261838, guid: 19a63478b2d6bdb4cbc53c1f94c8a232, type: 3}
   trajectory: {fileID: 965696545}
   projectileSpeed: 0
-  minProjectileSpd: 8
-  maxProjectileSpd: 36
-  enemyDashSpeed: 120
+  minProjectileSpd: 6
+  maxProjectileSpd: 30
+  enemyDashSpeed: 90
   enemyCheckBox: {x: 0.1, y: 3}
-  enemyCheckRadius: 20
+  enemyCheckRadius: 25
   counterForceScale: 0.33
   xShootScale: 1
   yShootScale: 1.05
@@ -659,7 +659,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1

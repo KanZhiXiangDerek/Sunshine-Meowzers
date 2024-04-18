@@ -60,7 +60,7 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: 0.48799568, y: -0.20182218}
-      - {x: 0.008406982, y: 0.29778555}
+      - {x: 0.006210003, y: 0.25720644}
       - {x: -0.847356, y: -0.18880567}
 --- !u!114 &1110028826018978163
 MonoBehaviour:
@@ -287,7 +287,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1.2
+  m_Radius: 1.8
 --- !u!114 &1110028826986960831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,6 +301,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ableToBeDestroyed: 1
+  doesItChase: 0
+  chaseSpd: 5
+  chaseTime: 5
+  doesItShoot: 0
+  projectile: {fileID: 0}
+  projectileSpd: 8
+  shootPerXSeconds: 1.5
 --- !u!1 &1110028827127948070
 GameObject:
   m_ObjectHideFlags: 0

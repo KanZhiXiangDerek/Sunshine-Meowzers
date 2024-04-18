@@ -19,7 +19,7 @@ public class TimeMan : MonoBehaviour
 
     void Update()
     {
-        Time.timeScale += (1 / (slowDownLength / reduceSlowNo)) * Time.unscaledDeltaTime;
+        Time.timeScale += (1 / slowDownLength * Time.unscaledDeltaTime);
         Time.timeScale = Mathf.Clamp(Time.timeScale, 0, 1);
 
         if (Time.timeScale >= 1)
@@ -61,10 +61,19 @@ public class TimeMan : MonoBehaviour
 
     public void TimeSlowDown(float slowDownNumber)
     {
-        slowDownFactor = slowDownNumber;
-        reduceSlowNo = 1.0f;
-        Time.timeScale = slowDownFactor;
-        Time.fixedDeltaTime = Time.timeScale * 0.2f;
+        if (!isTimeSlow)
+        {
+            Time.timeScale = slowDownFactor;
+            Time.fixedDeltaTime = Time.timeScale * 0.2f;
+            isTimeSlow = true;
+            Invoke("SetTimeSlowFalse", slowDownLength);
+        }
+       
+    }
+
+    void SetTimeSlowFalse()
+    {
+        isTimeSlow = false;
     }
 
     public void SlowDownLengthReduce(float reduceDivNo)

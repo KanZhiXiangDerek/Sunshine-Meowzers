@@ -63,11 +63,14 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         cam = Camera.main.GetComponent<Camera>();
+        
     }
     void Start()
     {
+        rb.velocity = Vector2.zero;
         currentGravityGainSpeed = gravityGainSpeed;
         gravityScale = maxGravityScale;
+        StartCoroutine(PlayerStayInPos(transform.position));
     }
 
     // Update is called once per frame
@@ -126,7 +129,7 @@ public class PlayerController : MonoBehaviour
                 RaycastHit2D hit = Physics2D.BoxCast(rayCastPos.position, enemyCheckBox, 0f, -direction, enemyCheckRadius, whatIsEnemy);
                 if (hit.collider != null)
                 {
-                    GameMan.instance.TimeSlow(0.01f);
+                    GameMan.instance.TimeSlow(0.25f);
                     canTimeSlow = false;
                 }
             }
@@ -137,8 +140,7 @@ public class PlayerController : MonoBehaviour
 
             trajectory.HideDot();
             endPoint = cam.ScreenToWorldPoint(Input.mousePosition);
-            direction = (endPoint - startPoint).normalized; // Calculate the direction vector\
-            //RaycastHit2D hit = Physics2D.Raycast(rayCastPos.position, -direction, enemyCheckRadius, whatIsEnemy);
+            direction = (endPoint - startPoint).normalized; // Calculate the direction vector
             RaycastHit2D hit = Physics2D.BoxCast(rayCastPos.position, enemyCheckBox, 0f, -direction, enemyCheckRadius, whatIsEnemy);
             playerAnim.ResetTrigger("IsAiming");
             playerAnim.SetTrigger("IsJumping");
@@ -154,15 +156,12 @@ public class PlayerController : MonoBehaviour
 
             if (hit.collider && isNearEnemy || hit.collider && isGrounded || hit.collider && isAbleToExtraJump)
             {
-                Debug.DrawLine(rayCastPos.position, hit.collider.transform.position, Color.red);
+
                 isAbleToExtraJump = false;
-                Debug.Log("Hit Object" + hit.collider.name);
+
                 Vector2 enemyDirection = (transform.position - hit.transform.position).normalized; // Calculate the direction vector
-                adjustedDir = enemyDirection;
-                StartCoroutine(TempDisableCounterForce(1.0f));
                 rb.velocity = rb.velocity * 0.01f;
-                rb.AddForce(-adjustedDir * enemyDashSpeed, ForceMode2D.Impulse);
-                Debug.Log("Enemy Dash Spd " + enemyDashSpeed);
+                rb.AddForce(-enemyDirection * enemyDashSpeed, ForceMode2D.Impulse);
                 playerSM.PlayerJumpSFX(new Vector3(preJumpPos.x, preJumpPos.y, -10));
 
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -176,6 +175,7 @@ public class PlayerController : MonoBehaviour
                 isAbleToExtraJump = false;
                 adjustedDir = new Vector2(direction.x * xShootScale, direction.y * yShootScale);
 
+              
                 StartCoroutine(CounterForce(adjustedDir, projectileSpeed));
                 rb.velocity = rb.velocity * 0.01f;
                 rb.AddForce(-adjustedDir * projectileSpeed, ForceMode2D.Impulse);
@@ -315,5 +315,20 @@ public class PlayerController : MonoBehaviour
             // Apply force to the Rigidbody
             GetComponent<Rigidbody>().AddForce(reflection * force);
         }
+    }
+
+    public void PlayerToStayInSamePos(Vector2 pos)
+    {
+        StartCoroutine(PlayerStayInPos(pos));
+    }
+    IEnumerator PlayerStayInPos(Vector2 spawnPos)
+    {
+        float timer = 1.0f;
+        timer -= Time.deltaTime;
+        if (timer > 0)
+        {
+            transform.position = spawnPos;
+        }
+        yield return new WaitForSeconds(timer);
     }
 }
