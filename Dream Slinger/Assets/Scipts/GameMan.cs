@@ -5,12 +5,14 @@ using UnityEngine;
 public class GameMan : MonoBehaviour
 {
     public static GameMan instance = null;
-    [SerializeField] private GameObject player;
+    public GameObject player;
+    [SerializeField] private GameObject sceneTrans;
     private GameObject currentPlayer;
     [SerializeField] private LevelContainer[] levels;
     GameObject currentLevelPrefab;
     [SerializeField] private int levelIndex;
     [SerializeField] private TimeMan timeManager;
+    bool isSettingLevel;
     private void Awake()
     {
         if (instance == null)
@@ -29,7 +31,7 @@ public class GameMan : MonoBehaviour
     {
         SetLevel();
     }
-    
+
     void Update()
     {
 
@@ -52,25 +54,33 @@ public class GameMan : MonoBehaviour
 
     public void SetLevel()
     {
-        if(currentLevelPrefab != null)
+        if (currentLevelPrefab != null)
         {
             Destroy(currentLevelPrefab);
         }
-       
+
         currentLevelPrefab = Instantiate(levels[levelIndex].levelPrefab, transform.position, Quaternion.identity);
         ResetPlayerPos(levels[levelIndex].levelPrefab.GetComponent<AreaManager>().GetCheckPointPos());
+        isSettingLevel = false;
     }
 
     public void NextLevel()
     {
-        levelIndex = (levelIndex + 1) % levels.Length;
-        //if (levelIndex < levels.Length)
-        //    levelIndex += 1;
-        //else
-        //    levelIndex = 0;
-        SetLevel();
+        if (!isSettingLevel)
+        {
+            isSettingLevel = true;
+            levelIndex = (levelIndex + 1) % levels.Length;
+            TriggerSceneTransition();
+            Invoke("SetLevel", 1.05f);
+        }
+        //Invoke("ResetSceneTransPos", 2.0f);
     }
 
+    public void ResetSceneTransPos()
+    {
+        //sceneTrans.GetComponent<SpriteRenderer>().enabled = false;
+        //sceneTrans.transform.position = new Vector2(-250f, transform.position.y);
+    }
     public GameObject GetPlayerObj()
     {
         return currentPlayer;
@@ -78,7 +88,7 @@ public class GameMan : MonoBehaviour
 
     public void ResetPlayerPos(Vector2 spawnPos)
     {
-        if(currentPlayer != null)
+        if (currentPlayer != null)
         {
             Destroy(currentPlayer);
         }
@@ -99,5 +109,10 @@ public class GameMan : MonoBehaviour
         playerController.ExtraJump();
         playerController.PlayerToStayInSamePos(spawnPos);
     }
-}
 
+    public void TriggerSceneTransition()
+    {
+        //sceneTrans.GetComponent<SpriteRenderer>().enabled = true;
+        sceneTrans.GetComponent<Animator>().SetTrigger("IsSceneTrans");
+    }
+}

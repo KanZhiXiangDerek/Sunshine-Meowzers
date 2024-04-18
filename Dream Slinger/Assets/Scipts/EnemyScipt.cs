@@ -11,6 +11,7 @@ public class EnemyScipt : MonoBehaviour
 
     [SerializeField] private bool doesItShoot;
     [SerializeField] private GameObject projectile;
+    [SerializeField] private Transform sp;
     [SerializeField] private float projectileSpd = 8.0f;
     [SerializeField] private float shootPerXSeconds = 1.5f;
     bool isFiring;
@@ -41,7 +42,7 @@ public class EnemyScipt : MonoBehaviour
         isFiring = true;
         Debug.Log("Enemy  Shoot");
         Transform player = GameMan.instance.GetPlayerObj().transform;
-        GameObject enemyProjectile = Instantiate(projectile, transform.position, Quaternion.identity);
+        GameObject enemyProjectile = Instantiate(projectile, sp.position, Quaternion.identity);
         Vector2 direction = (player.position - transform.position).normalized; // Calculate the direction vector
         Rigidbody2D rb = enemyProjectile.GetComponent<Rigidbody2D>();
         rb.AddForce(direction * projectileSpd, ForceMode2D.Impulse);
