@@ -127,8 +127,8 @@ MonoBehaviour:
   light2d: {fileID: 9074798954167853830}
   timeDelay: 0
   intensity:
+  - 0.8
   - 1
-  - 1.2
   timeBtwIntensity: 10
   adjustRadius: 1
   radius:
