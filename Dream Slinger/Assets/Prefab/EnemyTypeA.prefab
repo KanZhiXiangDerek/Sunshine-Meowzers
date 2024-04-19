@@ -232,7 +232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e4dd3817fbf000449990f42238794b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpd: 45
+  rotateSpd: 75
   rotateDir: 1
   doItPause: 0
   pauseEveryXSecond: 0
