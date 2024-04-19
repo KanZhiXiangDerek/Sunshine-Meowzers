@@ -60,7 +60,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5113101782545002807}
   m_LocalRotation: {x: -0, y: -0, z: 0.87261313, w: -0.488412}
-  m_LocalPosition: {x: -109.2, y: -5.6000013, z: 0}
+  m_LocalPosition: {x: -109.2, y: -0.7999983, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -83,7 +83,7 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.7
-  m_Color: {r: 0.74699473, g: 0.2588235, b: 1, a: 0.5019608}
+  m_Color: {r: 0.48276997, g: 0, b: 1, a: 0.5019608}
   m_Intensity: 0.8
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
@@ -161,8 +161,8 @@ MonoBehaviour:
   light2d: {fileID: 5113101782545002806}
   timeDelay: 0
   intensity:
-  - 1
-  - 1.5
+  - 0.3
+  - 0.5
   timeBtwIntensity: 10
   adjustRadius: 1
   radius:
@@ -171,11 +171,11 @@ MonoBehaviour:
   timeBtwRadiusLerp: 10
   colors:
   - serializedVersion: 2
-    rgba: 2583658674
+    rgba: 2583625828
   - serializedVersion: 2
-    rgba: 2583658699
+    rgba: 2583625879
   - serializedVersion: 2
-    rgba: 2583658745
+    rgba: 2583625971
   timeBtwColor: 10
 --- !u!1 &5113101782657025849
 GameObject:
@@ -203,7 +203,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5113101782657025849}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: -55.500004, y: 34.7, z: 0}
+  m_LocalPosition: {x: -55.500004, y: 39.500004, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -226,7 +226,7 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.7
-  m_Color: {r: 0.74699473, g: 0.2588235, b: 1, a: 0.5019608}
+  m_Color: {r: 0.48276997, g: 0, b: 1, a: 0.5019608}
   m_Intensity: 0.8
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
@@ -304,8 +304,8 @@ MonoBehaviour:
   light2d: {fileID: 5113101782657025848}
   timeDelay: 0
   intensity:
-  - 1
-  - 1.5
+  - 0.3
+  - 0.5
   timeBtwIntensity: 10
   adjustRadius: 1
   radius:
@@ -314,11 +314,11 @@ MonoBehaviour:
   timeBtwRadiusLerp: 10
   colors:
   - serializedVersion: 2
-    rgba: 2583658674
+    rgba: 2583625828
   - serializedVersion: 2
-    rgba: 2583658699
+    rgba: 2583625879
   - serializedVersion: 2
-    rgba: 2583658745
+    rgba: 2583625971
   timeBtwColor: 10
 --- !u!1 &5113101783994560873
 GameObject:
@@ -346,7 +346,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5113101783994560873}
   m_LocalRotation: {x: -0, y: -0, z: -0.91351676, w: -0.40680104}
-  m_LocalPosition: {x: 24.2, y: -0.30000162, z: 0}
+  m_LocalPosition: {x: 24.2, y: 4.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -369,7 +369,7 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.7
-  m_Color: {r: 0.74699473, g: 0.2588235, b: 1, a: 0.5019608}
+  m_Color: {r: 0.48276997, g: 0, b: 1, a: 0.5019608}
   m_Intensity: 0.8
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
@@ -447,8 +447,8 @@ MonoBehaviour:
   light2d: {fileID: 5113101783994560872}
   timeDelay: 0
   intensity:
-  - 0.8
-  - 1
+  - 0.3
+  - 0.5
   timeBtwIntensity: 10
   adjustRadius: 1
   radius:
@@ -457,9 +457,9 @@ MonoBehaviour:
   timeBtwRadiusLerp: 10
   colors:
   - serializedVersion: 2
-    rgba: 2583658674
+    rgba: 2583625828
   - serializedVersion: 2
-    rgba: 2583658699
+    rgba: 2583625879
   - serializedVersion: 2
-    rgba: 2583658745
+    rgba: 2583625971
   timeBtwColor: 10
