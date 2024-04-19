@@ -413,7 +413,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4077042057338656154}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -10.9, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -453,6 +453,7 @@ Transform:
   - {fileID: 1003441042824886262}
   - {fileID: 5333197264028320938}
   - {fileID: 8981520432263700821}
+  - {fileID: 1052504164578047010}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -18803,11 +18804,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9074798954167853828, guid: 5bdfee2183498494695d672877b86d50, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -14.9874
+      value: -16.5
       objectReference: {fileID: 0}
     - target: {fileID: 9074798954167853828, guid: 5bdfee2183498494695d672877b86d50, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -9.818961
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 9074798954167853828, guid: 5bdfee2183498494695d672877b86d50, type: 3}
       propertyPath: m_LocalPosition.z
@@ -18840,6 +18841,22 @@ PrefabInstance:
     - target: {fileID: 9074798954167853828, guid: 5bdfee2183498494695d672877b86d50, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074798954167853829, guid: 5bdfee2183498494695d672877b86d50, type: 3}
+      propertyPath: radius.Array.data[0]
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074798954167853829, guid: 5bdfee2183498494695d672877b86d50, type: 3}
+      propertyPath: radius.Array.data[1]
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074798954167853829, guid: 5bdfee2183498494695d672877b86d50, type: 3}
+      propertyPath: intensity.Array.data[0]
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074798954167853829, guid: 5bdfee2183498494695d672877b86d50, type: 3}
+      propertyPath: intensity.Array.data[1]
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 9074798954167853830, guid: 5bdfee2183498494695d672877b86d50, type: 3}
       propertyPath: m_PointLightInnerRadius
@@ -18917,6 +18934,68 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 5181214842510939584, guid: 199f34a38c5007f45830137392276f36, type: 3}
   m_PrefabInstance: {fileID: 2778733230432667642}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3094131292300470684
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4077042057338656152}
+    m_Modifications:
+    - target: {fileID: 2624383563414789565, guid: 8a2d2e38867ace94ead1178e31bef34f, type: 3}
+      propertyPath: m_Name
+      value: BG Cave Light
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624383563414789566, guid: 8a2d2e38867ace94ead1178e31bef34f, type: 3}
+      propertyPath: m_RootOrder
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624383563414789566, guid: 8a2d2e38867ace94ead1178e31bef34f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 52
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624383563414789566, guid: 8a2d2e38867ace94ead1178e31bef34f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 34.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624383563414789566, guid: 8a2d2e38867ace94ead1178e31bef34f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624383563414789566, guid: 8a2d2e38867ace94ead1178e31bef34f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624383563414789566, guid: 8a2d2e38867ace94ead1178e31bef34f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624383563414789566, guid: 8a2d2e38867ace94ead1178e31bef34f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624383563414789566, guid: 8a2d2e38867ace94ead1178e31bef34f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624383563414789566, guid: 8a2d2e38867ace94ead1178e31bef34f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624383563414789566, guid: 8a2d2e38867ace94ead1178e31bef34f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624383563414789566, guid: 8a2d2e38867ace94ead1178e31bef34f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8a2d2e38867ace94ead1178e31bef34f, type: 3}
+--- !u!4 &1052504164578047010 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2624383563414789566, guid: 8a2d2e38867ace94ead1178e31bef34f, type: 3}
+  m_PrefabInstance: {fileID: 3094131292300470684}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3259734076272624184
 PrefabInstance:
@@ -20169,7 +20248,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9074798954167853828, guid: 5bdfee2183498494695d672877b86d50, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -29.769224
+      value: -31.9
       objectReference: {fileID: 0}
     - target: {fileID: 9074798954167853828, guid: 5bdfee2183498494695d672877b86d50, type: 3}
       propertyPath: m_LocalPosition.z
@@ -20203,9 +20282,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9074798954167853829, guid: 5bdfee2183498494695d672877b86d50, type: 3}
+      propertyPath: radius.Array.data[0]
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074798954167853829, guid: 5bdfee2183498494695d672877b86d50, type: 3}
+      propertyPath: radius.Array.data[1]
+      value: 35
+      objectReference: {fileID: 0}
     - target: {fileID: 9074798954167853830, guid: 5bdfee2183498494695d672877b86d50, type: 3}
       propertyPath: m_PointLightInnerRadius
-      value: 15
+      value: 15.152981
       objectReference: {fileID: 0}
     - target: {fileID: 9074798954167853830, guid: 5bdfee2183498494695d672877b86d50, type: 3}
       propertyPath: m_PointLightOuterRadius
