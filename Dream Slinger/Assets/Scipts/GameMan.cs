@@ -12,6 +12,7 @@ public class GameMan : MonoBehaviour
     GameObject currentLevelPrefab;
     [SerializeField] private int levelIndex;
     [SerializeField] private TimeMan timeManager;
+    [SerializeField] private GameObject image;
     bool isSettingLevel;
     private void Awake()
     {
@@ -29,7 +30,7 @@ public class GameMan : MonoBehaviour
 
     private void Start()
     {
-        SetLevel();
+
     }
 
     void Update()
@@ -114,5 +115,10 @@ public class GameMan : MonoBehaviour
     {
         //sceneTrans.GetComponent<SpriteRenderer>().enabled = true;
         sceneTrans.GetComponent<Animator>().SetTrigger("IsSceneTrans");
+    }
+
+    public void SetImage(bool boolean)
+    {
+        gameObject.SetActive(boolean);
     }
 }
