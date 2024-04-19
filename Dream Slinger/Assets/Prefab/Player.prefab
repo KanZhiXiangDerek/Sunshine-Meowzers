@@ -614,7 +614,7 @@ MonoBehaviour:
   maxProjectileSpd: 30
   enemyDashSpeed: 90
   enemyCheckBox: {x: 0.1, y: 3}
-  enemyCheckRadius: 15
+  enemyCheckRadius: 25
   counterForceScale: 0.33
   xShootScale: 1
   yShootScale: 1.05
@@ -622,7 +622,7 @@ MonoBehaviour:
   maxGravityScale: 6
   gravityGainSpeed: 3
   reduceGravityDivider: 3
-  groundCheckRadius: 1.5
+  groundCheckRadius: 1.2
   isGrounded: 1
   isAbleToExtraJump: 0
   isNearEnemy: 0
