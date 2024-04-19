@@ -268,7 +268,7 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: 27.01207, y: 6.017392}
-      - {x: 0.9268498, y: 0.09472504}
+      - {x: 4.852547, y: 0.280522}
       - {x: 27.195621, y: -6.648073}
 --- !u!114 &7471829983889150060
 MonoBehaviour:
@@ -298,8 +298,11 @@ MonoBehaviour:
   wayPoints:
   - {fileID: 3197547943799840552}
   - {fileID: 3197547943799840552}
+  rotationPoints:
+  - {x: 0, y: 0, z: 0.92387956, w: -0.3826834}
+  - {x: 0, y: 0, z: 0.9238795, w: 0.38268343}
   currentIndex: 0
-  rotateSpeed: 5
+  rotateSpeed: 8
   isRotating: 0
 --- !u!1 &4308278154535848080
 GameObject:
@@ -405,7 +408,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0.09, y: 0.87}
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 2
 --- !u!1 &7212581129601918066
 GameObject:
   m_ObjectHideFlags: 0

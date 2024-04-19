@@ -5,22 +5,21 @@ using UnityEngine;
 public class EnemyRotateToWaypoints : MonoBehaviour
 {
     [SerializeField] private Transform[] wayPoints;
+    [SerializeField] private Quaternion[] rotationPoints;
     [SerializeField] private int currentIndex;
     //[SerializeField] private GameObject enemySprite;
     [SerializeField] private float rotateSpeed = 5.0f;
     //[SerializeField] private bool doesItRandomlyRotate;
     [SerializeField] private bool isRotating;
-    private bool canRotate;
 
     // Cooldown duration (in seconds)
-    float cooldownDuration = 5.0f; // Adjust as needed
+    float cooldownDuration = 1.0f; // Adjust as needed
 
     // Flag to track if cooldown is active
     bool isCooldownActive = false;
 
     void Start()
     {
-        canRotate = true;
         currentIndex = 0;
         isRotating = false;
     }
@@ -28,19 +27,18 @@ public class EnemyRotateToWaypoints : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (canRotate)
-        {
-            RotateToDirection(wayPoints[currentIndex]);
-        }
+        //Vector2 direction = wayPoints[currentIndex].position;
+        //float offset = 90f;
+        //float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        //Quaternion rotation = Quaternion.AngleAxis(angle + offset, Vector3.forward);
+
+
+        RotateToDirection(rotationPoints[currentIndex]);
+
     }
 
-    void RotateToDirection(Transform wayPoint)
+    void RotateToDirection(Quaternion rotation)
     {
-        Vector2 direction = wayPoint.position;
-        float offset = 90f;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        Quaternion rotation = Quaternion.AngleAxis(angle + offset, Vector3.forward);
-
         if (!isRotating)
         {
             StartCoroutine(LerpRotation(rotation, rotateSpeed));
@@ -48,17 +46,15 @@ public class EnemyRotateToWaypoints : MonoBehaviour
 
         //Quaternion playerRotation = transform.rotation;
         ///enemySprite.transform.rotation = Quaternion.Slerp(enemySprite.transform.rotation, rotation, rotateSpd * Time.deltaTime);
-        float closeAngleThreshold = 1.0f; // In degrees
+        float closeAngleThreshold = 0.1f; // In degrees
 
         // Calculate the angle between current rotation and target rotation
         float angleDifference = Quaternion.Angle(transform.rotation, rotation);
 
         if (angleDifference <= closeAngleThreshold && !isCooldownActive)
         {
-            canRotate = false;
-            Invoke("ChangeDirection", 1.0f);
+            ChangeDirection();
             StartCoroutine(StartCooldown());
-
         }
     }
 
@@ -82,7 +78,6 @@ public class EnemyRotateToWaypoints : MonoBehaviour
     void ChangeDirection()
     {
         currentIndex = (currentIndex + 1) % wayPoints.Length;
-        canRotate = true;
     }
 
     IEnumerator StartCooldown()
@@ -90,7 +85,6 @@ public class EnemyRotateToWaypoints : MonoBehaviour
         isCooldownActive = true;
         yield return new WaitForSeconds(cooldownDuration);
         isCooldownActive = false;
-        ChangeDirection(); // Change direction after cooldown
     }
 
 
