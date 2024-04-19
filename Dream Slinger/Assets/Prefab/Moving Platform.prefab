@@ -230,7 +230,7 @@ Transform:
   m_GameObject: {fileID: 5193665305381125224}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -10, y: 0, z: 0}
-  m_LocalScale: {x: 8, y: 8, z: 8}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5193665303582722289}
@@ -303,7 +303,7 @@ MonoBehaviour:
   wayPoints:
   - {fileID: 5193665303782842474}
   - {fileID: 5193665303919297930}
-  movSpeed: 50
+  movSpeed: 60
   isWaiting: 0
 --- !u!61 &5193665305381125220
 BoxCollider2D:
@@ -329,5 +329,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.3, y: 0.3}
+  m_Size: {x: 0.4, y: 0.15}
   m_EdgeRadius: 0

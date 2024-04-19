@@ -615,7 +615,7 @@ MonoBehaviour:
   maxProjectileSpd: 30
   enemyDashSpeed: 90
   extraJumpTime: 3
-  enemyCheckBox: {x: 0.1, y: 3}
+  enemyCheckBox: {x: 0.5, y: 3}
   enemyCheckRadius: 20
   counterForceScale: 0.33
   xShootScale: 1
