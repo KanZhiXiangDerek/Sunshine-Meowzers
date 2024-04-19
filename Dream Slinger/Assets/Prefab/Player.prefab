@@ -846,6 +846,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cf86ce010fb149342b7643a7d0aee7b2, type: 2}
   - {fileID: 11400000, guid: c10916529d813794d936bcea16c6139e, type: 2}
   - {fileID: 11400000, guid: be0dcf2cd38f8724cbee5fd1b16425f7, type: 2}
+  playerKill:
+  - {fileID: 11400000, guid: 599fc32683dc05d4ca7c0b725984b845, type: 2}
+  - {fileID: 11400000, guid: eb0d578e2e331b142a9096b80c92e8b0, type: 2}
+  playerPortal:
+  - {fileID: 11400000, guid: 6e8f4f83ff04b7743b19b287300558b0, type: 2}
+  playerDie:
+  - {fileID: 11400000, guid: 5eac864b64718ae449ba5fcc9dc66fed, type: 2}
 --- !u!1 &7417015346844955967
 GameObject:
   m_ObjectHideFlags: 0

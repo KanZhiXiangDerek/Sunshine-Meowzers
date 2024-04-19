@@ -6,6 +6,9 @@ public class PlayerSoundManager : MonoBehaviour
 {
     [SerializeField] private SoundClip[] playerJump;
     [SerializeField] private SoundClip[] playerLand;
+    [SerializeField] private SoundClip[] playerKill;
+    [SerializeField] private SoundClip[] playerPortal;
+    [SerializeField] private SoundClip[] playerDie;
     public void PlayerJumpSFX(Vector3 playerPos)
     {
         int rngNo = Random.Range(0, playerJump.Length);
@@ -16,6 +19,24 @@ public class PlayerSoundManager : MonoBehaviour
     {
         int rngNo = Random.Range(0, playerLand.Length);
         PlayAudioAtPos(playerLand[rngNo].audioClip, playerPos, playerLand[rngNo].volume);
+    }
+
+    public void PlayerKillSFX(Vector3 playerPos)
+    {
+        int rngNo = Random.Range(0, playerKill.Length);
+        PlayAudioAtPos(playerKill[rngNo].audioClip, playerPos, playerKill[rngNo].volume);
+    }
+
+    public void PlayerDieSFX(Vector3 playerPos)
+    {
+        int rngNo = Random.Range(0, playerDie.Length);
+        PlayAudioAtPos(playerDie[rngNo].audioClip, playerPos, playerDie[rngNo].volume);
+    }
+
+    public void PlayerPortalSFX(Vector3 playerPos)
+    {
+        int rngNo = Random.Range(0, playerPortal.Length);
+        PlayAudioAtPos(playerPortal[rngNo].audioClip, playerPos, playerPortal[rngNo].volume);
     }
     private void PlayAudioAtPos(AudioClip audioClip, Vector3 pos, float volume)
     {
