@@ -212,7 +212,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5193665305381125223}
   - component: {fileID: 5193665305381125222}
-  - component: {fileID: 5193665305381125221}
+  - component: {fileID: 8823870666990063848}
   - component: {fileID: 5193665305381125220}
   m_Layer: 0
   m_Name: Square (3)
@@ -288,7 +288,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5193665305381125221
+--- !u!114 &8823870666990063848
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -297,13 +297,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 5193665305381125224}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b93619af825cad9429df82078ee6bb6d, type: 3}
+  m_Script: {fileID: 11500000, guid: b20d5c1fb9daa4c46a2368d61afd19e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   wayPoints:
   - {fileID: 5193665303782842474}
   - {fileID: 5193665303919297930}
-  movSpeed: 40
+  movSpeed: 50
   isWaiting: 0
 --- !u!61 &5193665305381125220
 BoxCollider2D:
@@ -329,5 +329,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.8, y: 0.8}
   m_EdgeRadius: 0

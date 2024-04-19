@@ -76,7 +76,7 @@ public class PlayerCollision : MonoBehaviour
 
         if (collision.gameObject.tag == "Platform")
         {
-
+           
             MovingPlatform plat = collision.gameObject.GetComponent<MovingPlatform>();
             if (plat.GetWait() == false)
             {
@@ -117,7 +117,7 @@ public class PlayerCollision : MonoBehaviour
         if (collision.gameObject.tag == "Platform")
         {
             rb.velocity = Vector2.zero;
-            playerController.SetZeroGravity(2.0f);
+            playerController.SetZeroGravity(3.0f);
             playerController.ExtraJump();
         }
 
