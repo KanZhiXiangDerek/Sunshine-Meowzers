@@ -853,6 +853,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6e8f4f83ff04b7743b19b287300558b0, type: 2}
   playerDie:
   - {fileID: 11400000, guid: 5eac864b64718ae449ba5fcc9dc66fed, type: 2}
+  playerPlatform:
+  - {fileID: 11400000, guid: e111bac21ae3fa94a94c8dce67de2fc2, type: 2}
 --- !u!1 &7417015346844955967
 GameObject:
   m_ObjectHideFlags: 0

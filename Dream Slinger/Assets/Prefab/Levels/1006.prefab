@@ -70,8 +70,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1901642451
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 6a5fbf1421159f84f866955a782a17cb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -537,6 +537,7 @@ Transform:
   - {fileID: 1969544691477898300}
   - {fileID: 4067305189015697664}
   - {fileID: 6919023058376287386}
+  - {fileID: 4004463473819515626}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1051,6 +1052,68 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 5193665303582722289, guid: ac02dcd5c708f854a9240c1631d51a8c, type: 3}
   m_PrefabInstance: {fileID: 1123981130812131394}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1439208641507862356
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4077042057338656152}
+    m_Modifications:
+    - target: {fileID: 2624383563414789565, guid: 8a2d2e38867ace94ead1178e31bef34f, type: 3}
+      propertyPath: m_Name
+      value: BG Cave Light
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624383563414789566, guid: 8a2d2e38867ace94ead1178e31bef34f, type: 3}
+      propertyPath: m_RootOrder
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624383563414789566, guid: 8a2d2e38867ace94ead1178e31bef34f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 52
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624383563414789566, guid: 8a2d2e38867ace94ead1178e31bef34f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 34.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624383563414789566, guid: 8a2d2e38867ace94ead1178e31bef34f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624383563414789566, guid: 8a2d2e38867ace94ead1178e31bef34f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624383563414789566, guid: 8a2d2e38867ace94ead1178e31bef34f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624383563414789566, guid: 8a2d2e38867ace94ead1178e31bef34f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624383563414789566, guid: 8a2d2e38867ace94ead1178e31bef34f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624383563414789566, guid: 8a2d2e38867ace94ead1178e31bef34f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624383563414789566, guid: 8a2d2e38867ace94ead1178e31bef34f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624383563414789566, guid: 8a2d2e38867ace94ead1178e31bef34f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8a2d2e38867ace94ead1178e31bef34f, type: 3}
+--- !u!4 &4004463473819515626 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2624383563414789566, guid: 8a2d2e38867ace94ead1178e31bef34f, type: 3}
+  m_PrefabInstance: {fileID: 1439208641507862356}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1788504434006368616
 PrefabInstance:

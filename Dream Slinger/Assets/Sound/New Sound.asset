@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6cb64d8a33a8cd043861adfc1b70dbd3, type: 3}
-  m_Name: New Sound 4
+  m_Name: New Sound
   m_EditorClassIdentifier: 
   audioName: 
-  audioClip: {fileID: 8300000, guid: 5f6c1f084511fcb4b8fe2e6ae2ca8bc1, type: 3}
-  volume: 0.6
-  pitch: 0.5
+  audioClip: {fileID: 8300000, guid: 81a18aa14208a5841b61e796fc9436ae, type: 3}
+  volume: 1
+  pitch: 1
