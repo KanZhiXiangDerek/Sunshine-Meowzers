@@ -7,6 +7,7 @@ public class PlayerCollision : MonoBehaviour
     [SerializeField] private PlayerController playerController;
     [SerializeField] private PlayerSoundManager playerSM;
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private GameObject deathEffect;
     private Vector2 spawnPos;
 
     private void Start()
@@ -81,6 +82,7 @@ public class PlayerCollision : MonoBehaviour
             {
                 transform.position = Vector2.MoveTowards(transform.position, collision.transform.position, 100f * Time.deltaTime);
             }
+        
         }
 
 
@@ -114,8 +116,8 @@ public class PlayerCollision : MonoBehaviour
     {
         if (collision.gameObject.tag == "Platform")
         {
-            playerController.SetZeroGravity(1.0f);
             rb.velocity = Vector2.zero;
+            playerController.SetZeroGravity(2.0f);
             playerController.ExtraJump();
         }
 
@@ -130,7 +132,14 @@ public class PlayerCollision : MonoBehaviour
 
     private void Respawn()
     {
+        SpawnDeathEffect();
         GameMan.instance.SetLevel();
         transform.position = spawnPos;
+    }
+
+    public void SpawnDeathEffect()
+    {
+        GameObject deathEff = Instantiate(deathEffect, transform.position, Quaternion.identity);
+        Destroy(deathEff, 3.0f);
     }
 }

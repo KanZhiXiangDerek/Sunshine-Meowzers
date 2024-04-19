@@ -302,7 +302,7 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0.92387956, w: -0.3826834}
   - {x: 0, y: 0, z: 0.9238795, w: 0.38268343}
   currentIndex: 0
-  rotateSpeed: 8
+  rotateSpeed: 2
   isRotating: 0
 --- !u!1 &4308278154535848080
 GameObject:
@@ -391,8 +391,8 @@ MonoBehaviour:
   doesItShoot: 1
   projectile: {fileID: 5722121716492826635, guid: a957721b5ea08e04cb5fd62d5acde916, type: 3}
   sp: {fileID: 7212581129889534668}
-  projectileSpd: 50
-  shootPerXSeconds: 3
+  projectileSpd: 40
+  shootPerXSeconds: 1
 --- !u!58 &7212581128676732786
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -42,8 +42,9 @@ public class EnemyScipt : MonoBehaviour
         isFiring = true;
         Debug.Log("Enemy  Shoot");
         Transform player = GameMan.instance.GetPlayerObj().transform;
+
         GameObject enemyProjectile = Instantiate(projectile, sp.position, Quaternion.identity);
-        Vector2 direction = (player.position - transform.position).normalized; // Calculate the direction vector
+        Vector2 direction = (player.position - sp.position).normalized; // Calculate the direction vector
         Rigidbody2D rb = enemyProjectile.GetComponent<Rigidbody2D>();
         rb.AddForce(direction * projectileSpd, ForceMode2D.Impulse);
         yield return new WaitForSeconds(shootPerXSeconds);

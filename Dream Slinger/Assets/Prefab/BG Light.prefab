@@ -226,7 +226,7 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.7
-  m_Color: {r: 0.0754717, g: 0.0754717, b: 0.0754717, a: 1}
+  m_Color: {r: 0.74699473, g: 0.2588235, b: 1, a: 0.5019608}
   m_Intensity: 0.8
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
@@ -447,8 +447,8 @@ MonoBehaviour:
   light2d: {fileID: 5113101783994560872}
   timeDelay: 0
   intensity:
+  - 0.8
   - 1
-  - 1.5
   timeBtwIntensity: 10
   adjustRadius: 1
   radius:

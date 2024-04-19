@@ -4752,6 +4752,10 @@ PrefabInstance:
       propertyPath: m_ChunkCullingBounds.y
       value: 0.014705896
       objectReference: {fileID: 0}
+    - target: {fileID: 5742069564891550438, guid: 812c04e4271fb7b4dac860e13efe4bb2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5742069565317107028, guid: 812c04e4271fb7b4dac860e13efe4bb2, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -5773,6 +5777,10 @@ PrefabInstance:
     - target: {fileID: 1245479833941904066, guid: 12cd34e73ed019947859b797513dc5ab, type: 3}
       propertyPath: m_Name
       value: Checkpoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 3340718812529087004, guid: 12cd34e73ed019947859b797513dc5ab, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3340718812529087004, guid: 12cd34e73ed019947859b797513dc5ab, type: 3}
       propertyPath: m_SortingOrder

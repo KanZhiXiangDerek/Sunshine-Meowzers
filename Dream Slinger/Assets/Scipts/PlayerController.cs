@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform rayCastPos;
     [SerializeField] private PlayerSoundManager playerSM;
     [SerializeField] private GameObject dashEffect;
+    [SerializeField] private GameObject strongDashEffect;
 
 
     [Header("Drag And Shoot Stats"), Space(10)]
@@ -25,6 +26,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float minProjectileSpd;
     [SerializeField] float maxProjectileSpd;
     [SerializeField] float enemyDashSpeed = 100f;
+    [SerializeField] float extraJumpTime = 3.0f;
     [SerializeField] Vector2 enemyCheckBox;
     [SerializeField] float enemyCheckRadius = 5.0f;
     [SerializeField] float counterForceScale = 0.3f;
@@ -166,7 +168,7 @@ public class PlayerController : MonoBehaviour
 
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 Quaternion rotation = Quaternion.AngleAxis(angle + 90f, Vector3.forward);
-                SpawnDashEffect(rotation, 1 + (projectileSpeed / 10));
+                SpawnStrongDashEffect(rotation);
                 GameMan.instance.ResetTimeScale();
 
             }
@@ -238,7 +240,7 @@ public class PlayerController : MonoBehaviour
     }
     public void ExtraJump()
     {
-        StartCoroutine(EnableExtraJump(2.5f));
+        StartCoroutine(EnableExtraJump(extraJumpTime));
     }
     private IEnumerator EnableExtraJump(float timePeriod)
     {
@@ -302,6 +304,12 @@ public class PlayerController : MonoBehaviour
         scaleMutipler = Mathf.Clamp(scaleMutipler, 1.2f, 2.4f);
         GameObject effect = Instantiate(dashEffect, transform.position, dir);
         effect.transform.localScale = new Vector3(effect.transform.localScale.x * scaleMutipler, effect.transform.localScale.y * scaleMutipler, effect.transform.localScale.z);
+        Destroy(effect, 3.0f);
+    }
+
+    public void SpawnStrongDashEffect(Quaternion dir)
+    {
+        GameObject effect = Instantiate(strongDashEffect, transform.position, dir);
         Destroy(effect, 3.0f);
     }
 
