@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4642692228480087806}
   - component: {fileID: 4642692228480087805}
   - component: {fileID: 4642692228480087807}
+  - component: {fileID: -4870902716584963943}
   m_Layer: 0
   m_Name: GameMan
   m_TagString: Untagged
@@ -47,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slowDownFactor: 0.01
   slowDownLength: 0.5
+  isTimeSlow: 0
 --- !u!114 &4642692228480087807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,4 +61,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25aee733acb9ff44db82d6c1493da56a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeManager: {fileID: 4642692228480087805}
+  player: {fileID: 0}
+  levels: []
+--- !u!114 &-4870902716584963943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4642692228480087804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f7de9ef06f04864391a928af29f4b46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NormalTimeScale: 1
+  UpdateTimescale: 1
+  UpdateFixedDeltaTime: 1
+  UpdateMaximumDeltaTime: 1
+  CurrentTimeScale: 1
+  TargetTimeScale: 1
+  TestButton: 0

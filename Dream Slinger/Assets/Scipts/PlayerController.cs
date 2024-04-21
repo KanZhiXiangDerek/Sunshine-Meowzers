@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
-
+using MoreMountains.Feedbacks;
 public class PlayerController : MonoBehaviour
 {
     [Header("References"), Space(10)]
     [SerializeField] private Camera cam;
     [SerializeField] private GameObject playerSprite;
+    [SerializeField] private GameObject dustParticle;
     [SerializeField] private Animator playerAnim;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private LayerMask whatIsGround;
@@ -30,6 +31,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Vector2 enemyCheckBox;
     [SerializeField] float enemyCheckRadius = 5.0f;
     [SerializeField] float counterForceScale = 0.3f;
+    [SerializeField] MMF_Player playerPreJumpFeedback;
+    [SerializeField] MMF_Player playerPreJumpChargeFeedback;
+    [SerializeField] MMF_Player playerJumpFeedback;
 
     [SerializeField] float xShootScale;
     [SerializeField] float yShootScale;
@@ -86,6 +90,7 @@ public class PlayerController : MonoBehaviour
             float offset = 90f;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             Quaternion rotation = Quaternion.AngleAxis(angle + offset, Vector3.forward);
+            dustParticle.transform.rotation = rotation;
             playerSprite.transform.rotation = Quaternion.Slerp(playerSprite.transform.rotation, rotation, rotationSpeed * Time.deltaTime);
             if (playerSprite.transform.rotation.z >= 0.001f)
             {
@@ -112,11 +117,13 @@ public class PlayerController : MonoBehaviour
             playerAnim.ResetTrigger("IsLanding");
             playerAnim.SetTrigger("IsAiming");
             trajectory.ShowDot();
+            playerPreJumpFeedback.PlayFeedbacks();
 
         }
 
         if (Input.GetKey(KeyCode.Mouse0))
         {
+            playerPreJumpChargeFeedback.PlayFeedbacks();
             preJumpPos = transform.position;
             currentPoint = cam.ScreenToWorldPoint(Input.mousePosition);
             direction = (currentPoint - startPoint).normalized; // Calculate the direction vector
@@ -187,6 +194,7 @@ public class PlayerController : MonoBehaviour
             }
 
             canTimeSlow = true;
+            playerJumpFeedback.PlayFeedbacks();
         }
     }
 

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using MoreMountains.Feedbacks;
 public class PlayerCollision : MonoBehaviour
 {
     [SerializeField] private PlayerController playerController;
@@ -10,6 +10,7 @@ public class PlayerCollision : MonoBehaviour
     [SerializeField] private GameObject deathEffect;
     private Vector2 spawnPos;
 
+    [SerializeField] MMF_Player landFeedback;
     private void Start()
     {
 
@@ -18,10 +19,13 @@ public class PlayerCollision : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ground")
         {
-            playerSM.PlayerLandSFX(new Vector3(transform.position.x, transform.position.y, -10));
+            landFeedback.PlayFeedbacks();
             playerController.AnimTrigger("IsLanding");
             playerController.ResetAnimTrigger("IsJumping");
+
+
             rb.velocity = Vector2.zero;
+
             playerController.SetGravityScale(0f);
         }
         if (collision.gameObject.tag == "Obstacle")
@@ -35,7 +39,6 @@ public class PlayerCollision : MonoBehaviour
             {
                 Destroy(collision.gameObject);
                 playerSM.PlayerKillSFX(transform.position);
-                //GameMan.instance.TempRespawnPlayer(new Vector2(collision.gameObject.transform.position.x, collision.gameObject.transform.position.y + 0.5f));
                 playerController.ExtraJump();
                 
             }
