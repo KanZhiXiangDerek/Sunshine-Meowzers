@@ -30,9 +30,7 @@ public class PlayerCollision : MonoBehaviour
         }
 
         if (collision.gameObject.tag == "Enemy")
-        {
-            playerController.ReflectForce(100f);
-          
+        {      
             if (collision.gameObject.GetComponent<EnemyScipt>().IsAbleToBeDestroyed())
             {
                 Destroy(collision.gameObject);

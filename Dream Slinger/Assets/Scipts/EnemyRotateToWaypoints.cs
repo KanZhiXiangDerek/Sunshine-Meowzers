@@ -27,14 +27,7 @@ public class EnemyRotateToWaypoints : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Vector2 direction = wayPoints[currentIndex].position;
-        //float offset = 90f;
-        //float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        //Quaternion rotation = Quaternion.AngleAxis(angle + offset, Vector3.forward);
-
-
         RotateToDirection(rotationPoints[currentIndex]);
-
     }
 
     void RotateToDirection(Quaternion rotation)
@@ -44,11 +37,7 @@ public class EnemyRotateToWaypoints : MonoBehaviour
             StartCoroutine(LerpRotation(rotation, rotateSpeed));
         }
 
-        //Quaternion playerRotation = transform.rotation;
-        ///enemySprite.transform.rotation = Quaternion.Slerp(enemySprite.transform.rotation, rotation, rotateSpd * Time.deltaTime);
         float closeAngleThreshold = 0.1f; // In degrees
-
-        // Calculate the angle between current rotation and target rotation
         float angleDifference = Quaternion.Angle(transform.rotation, rotation);
 
         if (angleDifference <= closeAngleThreshold && !isCooldownActive)

@@ -72,7 +72,6 @@ public class PlayerController : MonoBehaviour
         rb.velocity = Vector2.zero;
         currentGravityGainSpeed = gravityGainSpeed;
         gravityScale = maxGravityScale;
-        StartCoroutine(PlayerStayInPos(transform.position));
     }
 
     // Update is called once per frame
@@ -131,7 +130,6 @@ public class PlayerController : MonoBehaviour
                 RaycastHit2D hit = Physics2D.BoxCast(rayCastPos.position, enemyCheckBox, 0f, -direction, enemyCheckRadius, whatIsEnemy);
                 if (hit.collider != null)
                 {
-                    GameMan.instance.TimeSlow(0.25f);
                     canTimeSlow = false;
                 }
             }
@@ -169,7 +167,6 @@ public class PlayerController : MonoBehaviour
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 Quaternion rotation = Quaternion.AngleAxis(angle + 90f, Vector3.forward);
                 SpawnStrongDashEffect(rotation);
-                GameMan.instance.ResetTimeScale();
 
             }
             else if (!hit && isGrounded || !hit && isAbleToExtraJump)
@@ -187,8 +184,6 @@ public class PlayerController : MonoBehaviour
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 Quaternion rotation = Quaternion.AngleAxis(angle + 90f, Vector3.forward);
                 SpawnDashEffect(rotation, 1 + (projectileSpeed / 10));
-                GameMan.instance.ResetTimeScale();
-
             }
 
             canTimeSlow = true;
@@ -231,13 +226,13 @@ public class PlayerController : MonoBehaviour
         canCounterForce = true;
     }
 
-    IEnumerator TempDisableTimeSlow(float timer)
-    {
-        canTimeSlow = false;
-        yield return new WaitForSeconds(timer);
-        canTimeSlow = true;
-        currentTimeToNextSlow = timeToNextTimeSlow;
-    }
+    //IEnumerator TempDisableTimeSlow(float timer)
+    //{
+    //    canTimeSlow = false;
+    //    yield return new WaitForSeconds(timer);
+    //    canTimeSlow = true;
+    //    currentTimeToNextSlow = timeToNextTimeSlow;
+    //}
     public void ExtraJump()
     {
         StartCoroutine(EnableExtraJump(extraJumpTime));
@@ -311,32 +306,5 @@ public class PlayerController : MonoBehaviour
     {
         GameObject effect = Instantiate(strongDashEffect, transform.position, dir);
         Destroy(effect, 3.0f);
-    }
-
-    public void ReflectForce(float force)
-    {
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, Mathf.Infinity))
-        {
-            // Calculate reflection vector
-            Vector2 reflection = Vector3.Reflect(transform.forward, hit.normal);
-
-            // Apply force to the Rigidbody
-            GetComponent<Rigidbody>().AddForce(reflection * force);
-        }
-    }
-
-    public void PlayerToStayInSamePos(Vector2 pos)
-    {
-        StartCoroutine(PlayerStayInPos(pos));
-    }
-    IEnumerator PlayerStayInPos(Vector2 spawnPos)
-    {
-        float timer = 1.0f;
-        timer -= Time.deltaTime;
-        if (timer > 0)
-        {
-            transform.position = spawnPos;
-        }
-        yield return new WaitForSeconds(timer);
     }
 }
