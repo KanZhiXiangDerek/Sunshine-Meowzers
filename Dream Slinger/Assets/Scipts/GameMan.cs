@@ -29,7 +29,7 @@ public class GameMan : MonoBehaviour
 
     private void Start()
     {
-
+        ResetPlayerPos(levels[levelIndex].levelPrefab.GetComponent<AreaManager>().GetCheckPointPos());
     }
 
     void Update()
@@ -45,7 +45,8 @@ public class GameMan : MonoBehaviour
         }
 
         currentLevelPrefab = Instantiate(levels[levelIndex].levelPrefab, transform.position, Quaternion.identity);
-        ResetPlayerPos(levels[levelIndex].levelPrefab.GetComponent<AreaManager>().GetCheckPointPos());
+        currentPlayer.transform.position = levels[levelIndex].levelPrefab.GetComponent<AreaManager>().GetCheckPointPos();
+        //ResetPlayerPos(levels[levelIndex].levelPrefab.GetComponent<AreaManager>().GetCheckPointPos());
         isSettingLevel = false;
     }
 

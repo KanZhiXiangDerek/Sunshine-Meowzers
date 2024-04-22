@@ -8,9 +8,11 @@ public class PlayerCollision : MonoBehaviour
     [SerializeField] private PlayerSoundManager playerSM;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private GameObject deathEffect;
+    [SerializeField] private GameObject landEffect;
     private Vector2 spawnPos;
 
     [SerializeField] MMF_Player landFeedback;
+    [SerializeField] MMF_Player deathFeedback;
     private void Start()
     {
 
@@ -20,6 +22,7 @@ public class PlayerCollision : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             landFeedback.PlayFeedbacks();
+            SpawnLandEffect(playerController.GetDustDir());
             playerController.AnimTrigger("IsLanding");
             playerController.ResetAnimTrigger("IsJumping");
 
@@ -30,7 +33,10 @@ public class PlayerCollision : MonoBehaviour
         }
         if (collision.gameObject.tag == "Obstacle")
         {
-            Respawn();
+            rb.velocity = Vector2.zero;
+            rb.gravityScale = 0;
+            deathFeedback.PlayFeedbacks();
+            Invoke("Respawn", 0.2f);
         }
 
         if (collision.gameObject.tag == "Enemy")
@@ -38,13 +44,15 @@ public class PlayerCollision : MonoBehaviour
             if (collision.gameObject.GetComponent<EnemyScipt>().IsAbleToBeDestroyed())
             {
                 Destroy(collision.gameObject);
-                playerSM.PlayerKillSFX(transform.position);
                 playerController.ExtraJump();
                 
             }
             else
             {
-                Respawn();
+                rb.velocity = Vector2.zero;
+                rb.gravityScale = 0;
+                deathFeedback.PlayFeedbacks();
+                Invoke("Respawn", 0.2f);
             }
         }
     }
@@ -137,15 +145,12 @@ public class PlayerCollision : MonoBehaviour
 
     private void Respawn()
     {
-        playerSM.PlayerDieSFX(spawnPos);
-        SpawnDeathEffect();
         GameMan.instance.SetLevel();
-        transform.position = spawnPos;
     }
 
-    public void SpawnDeathEffect()
+    public void SpawnLandEffect(Quaternion dir)
     {
-        GameObject deathEff = Instantiate(deathEffect, transform.position, Quaternion.identity);
-        Destroy(deathEff, 3.0f);
+        //GameObject deathEff = Instantiate(landEffect, transform.position, dir);
+        //Destroy(landEffect, 3.0f);
     }
 }

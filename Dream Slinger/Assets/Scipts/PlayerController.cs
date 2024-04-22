@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerSoundManager playerSM;
     [SerializeField] private GameObject dashEffect;
     [SerializeField] private GameObject strongDashEffect;
-
+    private Quaternion dustDir;
 
     [Header("Drag And Shoot Stats"), Space(10)]
     [SerializeField] private Trajectory trajectory;
@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
         isNearEnemy = Physics2D.OverlapCircle(transform.position, enemyCheckRadius, whatIsEnemy);
-
+        
         if (!isGrounded)
         {
             float rotationSpeed = 10f + (projectileSpeed / 10);
@@ -92,6 +92,8 @@ public class PlayerController : MonoBehaviour
             Quaternion rotation = Quaternion.AngleAxis(angle + offset, Vector3.forward);
             dustParticle.transform.rotation = rotation;
             playerSprite.transform.rotation = Quaternion.Slerp(playerSprite.transform.rotation, rotation, rotationSpeed * Time.deltaTime);
+            dustParticle.transform.rotation = Quaternion.Slerp(dustParticle.transform.rotation, rotation, rotationSpeed * 1.5f * Time.deltaTime);
+            dustDir = Quaternion.Euler(dustParticle.transform.rotation.x, dustParticle.transform.rotation.y, dustParticle.transform.rotation.z);
             if (playerSprite.transform.rotation.z >= 0.001f)
             {
                 playerSprite.GetComponent<SpriteRenderer>().flipX = true;
@@ -109,6 +111,8 @@ public class PlayerController : MonoBehaviour
             float angle = 0;
             Quaternion rotation = Quaternion.AngleAxis(angle + offset, Vector3.forward);
             playerSprite.transform.rotation = Quaternion.Slerp(playerSprite.transform.rotation, rotation, rotationSpeed * Time.deltaTime);
+            dustParticle.transform.rotation = Quaternion.Slerp(dustParticle.transform.rotation, rotation, rotationSpeed * 1.5f * Time.deltaTime);
+            dustDir = Quaternion.Euler(dustParticle.transform.rotation.x, dustParticle.transform.rotation.y, dustParticle.transform.rotation.z);
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -173,6 +177,7 @@ public class PlayerController : MonoBehaviour
 
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 Quaternion rotation = Quaternion.AngleAxis(angle + 90f, Vector3.forward);
+                dustDir = rotation;
                 SpawnStrongDashEffect(rotation);
 
             }
@@ -190,6 +195,7 @@ public class PlayerController : MonoBehaviour
 
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 Quaternion rotation = Quaternion.AngleAxis(angle + 90f, Vector3.forward);
+                dustDir = rotation;
                 SpawnDashEffect(rotation, 1 + (projectileSpeed / 10));
             }
 
@@ -314,5 +320,9 @@ public class PlayerController : MonoBehaviour
     {
         GameObject effect = Instantiate(strongDashEffect, transform.position, dir);
         Destroy(effect, 3.0f);
+    }
+    public Quaternion GetDustDir()
+    {
+        return dustDir;
     }
 }
