@@ -8,22 +8,20 @@ public class PlayerController : MonoBehaviour
     [Header("References"), Space(10)]
     [SerializeField] private Camera cam;
     [SerializeField] private GameObject playerSprite;
-    [SerializeField] private GameObject dustParticle;
     [SerializeField] private Animator playerAnim;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private LayerMask whatIsEnemy;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Transform rayCastPos;
-    [SerializeField] private PlayerSoundManager playerSM;
-    [SerializeField] private GameObject dashEffect;
-    [SerializeField] private GameObject strongDashEffect;
     private Quaternion dustDir;
 
-    [Header("Drag And Shoot Stats"), Space(10)]
+    [Header("Drag & Shoot"), Space(10)]
     [SerializeField] private Trajectory trajectory;
     [SerializeField] private float projectileSpeed;
     private float dragDistance;
+    [SerializeField] float xShootScale;
+    [SerializeField] float yShootScale;
     [SerializeField] float minProjectileSpd;
     [SerializeField] float maxProjectileSpd;
     [SerializeField] float enemyDashSpeed = 100f;
@@ -31,14 +29,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Vector2 enemyCheckBox;
     [SerializeField] float enemyCheckRadius = 5.0f;
     [SerializeField] float counterForceScale = 0.3f;
+
+    [Header("Player Feedback"), Space(10)]
     [SerializeField] MMF_Player playerPreJumpFeedback;
     [SerializeField] MMF_Player playerPreJumpChargeFeedback;
     [SerializeField] MMF_Player playerJumpFeedback;
     [SerializeField] MMF_Player playerPreEnemyJumpFeedback;
     [SerializeField] MMF_Player playerEnemyJumpFeedback;
-
-    [SerializeField] float xShootScale;
-    [SerializeField] float yShootScale;
+    [SerializeField] private GameObject dashEffect;
+    [SerializeField] private GameObject strongDashEffect;
+    [SerializeField] private GameObject dustParticle;
 
     [Header("GravityScale"), Space(10)]
     [SerializeField] float gravityScale;
@@ -47,25 +47,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float reduceGravityDivider = 4.0f;
     float currentGravityGainSpeed;
     [SerializeField] float groundCheckRadius = 0.5f;
-    //[SerializeField] bool isPlayerGainGravity;
 
+    [Header("Bool Check"), Space(10)]
     [SerializeField] bool isGrounded;
     [SerializeField] bool isAbleToExtraJump;
     [SerializeField] bool isNearEnemy;
     [SerializeField] bool canCounterForce;
-    [SerializeField] bool canTimeSlow = true;
 
-    [Header("Others"), Space(10)]
+    //[Header("Others"), Space(10)]
     Vector2 mousePos;
     Vector2 startPoint;
     Vector2 currentPoint;
     Vector2 endPoint;
     Vector2 direction;
     Vector3 preJumpPos;
-
-    float timeToNextTimeSlow = 1.0f;
-    float currentTimeToNextSlow;
-    float ogCamSize;
 
 
     private void Awake()
@@ -138,7 +133,7 @@ public class PlayerController : MonoBehaviour
             float currentForce = tempDragDistance * 2.5f;
             trajectory.UpdateDots(transform.position, (-direction * currentForce), 3f);
 
-            if (isNearEnemy && !isGrounded && canTimeSlow)
+            if (isNearEnemy && !isGrounded)
             {
                 RaycastHit2D hit = Physics2D.BoxCast(rayCastPos.position, enemyCheckBox, 0f, -direction, enemyCheckRadius, whatIsEnemy);
                 if (hit.collider != null)
@@ -175,7 +170,6 @@ public class PlayerController : MonoBehaviour
                 Vector2 enemyDirection = (transform.position - hit.transform.position).normalized; // Calculate the direction vector
                 rb.velocity = rb.velocity * 0.01f;
                 rb.AddForce(-enemyDirection * enemyDashSpeed, ForceMode2D.Impulse);
-                playerSM.PlayerJumpSFX(new Vector3(preJumpPos.x, preJumpPos.y, -10));
 
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 Quaternion rotation = Quaternion.AngleAxis(angle + 90f, Vector3.forward);
@@ -194,7 +188,7 @@ public class PlayerController : MonoBehaviour
                 rb.velocity = rb.velocity * 0.01f;
                 rb.AddForce(-adjustedDir * projectileSpeed, ForceMode2D.Impulse);
                 Debug.Log("Projectile Speed " + projectileSpeed);
-                playerSM.PlayerJumpSFX(new Vector3(preJumpPos.x, preJumpPos.y, -10));
+               
 
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 Quaternion rotation = Quaternion.AngleAxis(angle + 90f, Vector3.forward);
@@ -202,15 +196,11 @@ public class PlayerController : MonoBehaviour
                 SpawnDashEffect(rotation, 1 + (projectileSpeed / 10));
                 playerJumpFeedback.PlayFeedbacks();
             }
-
-            canTimeSlow = true;
-           
         }
     }
 
     private void FixedUpdate()
     {
-
         rb.AddForce(Physics2D.gravity * gravityScale, ForceMode2D.Force);
         gravityScale += Mathf.Pow(currentGravityGainSpeed, 6 / 2.5f) * Time.fixedDeltaTime;
         if (gravityScale >= maxGravityScale)
@@ -243,14 +233,6 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(timer);
         canCounterForce = true;
     }
-
-    //IEnumerator TempDisableTimeSlow(float timer)
-    //{
-    //    canTimeSlow = false;
-    //    yield return new WaitForSeconds(timer);
-    //    canTimeSlow = true;
-    //    currentTimeToNextSlow = timeToNextTimeSlow;
-    //}
     public void ExtraJump()
     {
         StartCoroutine(EnableExtraJump(extraJumpTime));

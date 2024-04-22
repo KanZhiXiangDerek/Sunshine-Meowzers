@@ -4,26 +4,24 @@ using UnityEngine;
 using MoreMountains.Feedbacks;
 public class PlayerCollision : MonoBehaviour
 {
+    [Header("References"), Space(10)]
     [SerializeField] private PlayerController playerController;
-    [SerializeField] private PlayerSoundManager playerSM;
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private GameObject deathEffect;
-    [SerializeField] private GameObject landEffect;
     private Vector2 spawnPos;
 
+    [Header("Player Feedback"), Space(10)]
     [SerializeField] MMF_Player landFeedback;
     [SerializeField] MMF_Player deathFeedback;
     [SerializeField] MMF_Player hitEnemyFeedback;
-    private void Start()
-    {
-
-    }
+    [SerializeField] MMF_Player hitPlatformFeedback;
+    [SerializeField] MMF_Player hitPortalFeedback;
+    [SerializeField] private GameObject deathEffect;
+    [SerializeField] private GameObject landEffect;
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground")
         {
             landFeedback.PlayFeedbacks();
-            SpawnLandEffect(playerController.GetDustDir());
             playerController.AnimTrigger("IsLanding");
             playerController.ResetAnimTrigger("IsJumping");
 
@@ -35,7 +33,6 @@ public class PlayerCollision : MonoBehaviour
         if (collision.gameObject.tag == "Obstacle")
         {
             rb.velocity = Vector2.zero;
-            rb.gravityScale = 0;
             deathFeedback.PlayFeedbacks();
             Invoke("Respawn", 0.2f);
         }
@@ -52,7 +49,6 @@ public class PlayerCollision : MonoBehaviour
             else
             {
                 rb.velocity = Vector2.zero;
-                rb.gravityScale = 0;
                 deathFeedback.PlayFeedbacks();
                 Invoke("Respawn", 0.2f);
             }
@@ -92,16 +88,17 @@ public class PlayerCollision : MonoBehaviour
             MovingPlatform plat = collision.gameObject.GetComponent<MovingPlatform>();
             if (plat.GetWait() == false)
             {
-                landFeedback.PlayFeedbacks();
+                hitPlatformFeedback.PlayFeedbacks();
                 transform.position = Vector2.MoveTowards(transform.position, collision.transform.position, 100f * Time.deltaTime);
             }
         
         }
 
-
         if (collision.gameObject.tag == "EndPoint")
         {
-            playerSM.PlayerPortalSFX(transform.position);
+            hitPortalFeedback.PlayFeedbacks();
+            rb.velocity = Vector2.zero;
+            //transform.position = Vector2.MoveTowards(transform.position, collision.transform.position, 100f * Time.deltaTime);
             GameMan.instance.NextLevel();
         }
 
@@ -130,7 +127,7 @@ public class PlayerCollision : MonoBehaviour
     {
         if (collision.gameObject.tag == "Platform")
         {
-            landFeedback.PlayFeedbacks();
+            hitPlatformFeedback.PlayFeedbacks();
             //playerSM.PlayerPlatformSFX(transform.position);
             rb.velocity = Vector2.zero;
             playerController.SetZeroGravity(3.0f);
@@ -148,12 +145,7 @@ public class PlayerCollision : MonoBehaviour
 
     private void Respawn()
     {
+        rb.velocity = Vector2.zero;
         GameMan.instance.SetLevel();
-    }
-
-    public void SpawnLandEffect(Quaternion dir)
-    {
-        //GameObject deathEff = Instantiate(landEffect, transform.position, dir);
-        //Destroy(landEffect, 3.0f);
     }
 }

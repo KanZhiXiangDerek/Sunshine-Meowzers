@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using MoreMountains.Feedbacks;
 public class GameMan : MonoBehaviour
 {
     public static GameMan instance = null;
@@ -9,6 +9,7 @@ public class GameMan : MonoBehaviour
     private GameObject currentPlayer;
 
     [SerializeField] private LevelContainer[] levels;
+    [SerializeField] private MMF_Player screenFade;
     GameObject currentLevelPrefab;
 
     private int levelIndex;
@@ -45,8 +46,8 @@ public class GameMan : MonoBehaviour
         }
 
         currentLevelPrefab = Instantiate(levels[levelIndex].levelPrefab, transform.position, Quaternion.identity);
-        currentPlayer.transform.position = levels[levelIndex].levelPrefab.GetComponent<AreaManager>().GetCheckPointPos();
-        //ResetPlayerPos(levels[levelIndex].levelPrefab.GetComponent<AreaManager>().GetCheckPointPos());
+        //currentPlayer.transform.position = levels[levelIndex].levelPrefab.GetComponent<AreaManager>().GetCheckPointPos();
+        ResetPlayerPos(levels[levelIndex].levelPrefab.GetComponent<AreaManager>().GetCheckPointPos());
         isSettingLevel = false;
     }
 
@@ -56,7 +57,10 @@ public class GameMan : MonoBehaviour
         {
             isSettingLevel = true;
             levelIndex = (levelIndex + 1) % levels.Length;
-            Invoke("SetLevel", 1.05f);
+            ScreenFade();
+            Invoke("ScreenFadeOut", 1.0f);
+            Invoke("SetLevel", 0.8f);
+ 
         }
     }
 
@@ -73,5 +77,10 @@ public class GameMan : MonoBehaviour
         }
         currentPlayer = Instantiate(player.gameObject, spawnPos, Quaternion.identity);
         player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+    }
+
+    public void ScreenFade()
+    {
+        screenFade.PlayFeedbacks();
     }
 }
