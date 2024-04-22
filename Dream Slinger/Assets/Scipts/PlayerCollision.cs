@@ -13,6 +13,7 @@ public class PlayerCollision : MonoBehaviour
 
     [SerializeField] MMF_Player landFeedback;
     [SerializeField] MMF_Player deathFeedback;
+    [SerializeField] MMF_Player hitEnemyFeedback;
     private void Start()
     {
 
@@ -43,6 +44,7 @@ public class PlayerCollision : MonoBehaviour
         {      
             if (collision.gameObject.GetComponent<EnemyScipt>().IsAbleToBeDestroyed())
             {
+                hitEnemyFeedback.PlayFeedbacks();
                 Destroy(collision.gameObject);
                 playerController.ExtraJump();
                 
@@ -90,7 +92,7 @@ public class PlayerCollision : MonoBehaviour
             MovingPlatform plat = collision.gameObject.GetComponent<MovingPlatform>();
             if (plat.GetWait() == false)
             {
-              
+                landFeedback.PlayFeedbacks();
                 transform.position = Vector2.MoveTowards(transform.position, collision.transform.position, 100f * Time.deltaTime);
             }
         
@@ -128,7 +130,8 @@ public class PlayerCollision : MonoBehaviour
     {
         if (collision.gameObject.tag == "Platform")
         {
-            playerSM.PlayerPlatformSFX(transform.position);
+            landFeedback.PlayFeedbacks();
+            //playerSM.PlayerPlatformSFX(transform.position);
             rb.velocity = Vector2.zero;
             playerController.SetZeroGravity(3.0f);
             playerController.ExtraJump();

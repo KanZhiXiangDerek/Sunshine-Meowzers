@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] MMF_Player playerPreJumpFeedback;
     [SerializeField] MMF_Player playerPreJumpChargeFeedback;
     [SerializeField] MMF_Player playerJumpFeedback;
+    [SerializeField] MMF_Player playerPreEnemyJumpFeedback;
+    [SerializeField] MMF_Player playerEnemyJumpFeedback;
 
     [SerializeField] float xShootScale;
     [SerializeField] float yShootScale;
@@ -141,7 +143,7 @@ public class PlayerController : MonoBehaviour
                 RaycastHit2D hit = Physics2D.BoxCast(rayCastPos.position, enemyCheckBox, 0f, -direction, enemyCheckRadius, whatIsEnemy);
                 if (hit.collider != null)
                 {
-                    canTimeSlow = false;
+                    playerPreEnemyJumpFeedback.PlayFeedbacks();
                 }
             }
         }
@@ -179,6 +181,7 @@ public class PlayerController : MonoBehaviour
                 Quaternion rotation = Quaternion.AngleAxis(angle + 90f, Vector3.forward);
                 dustDir = rotation;
                 SpawnStrongDashEffect(rotation);
+                playerEnemyJumpFeedback.PlayFeedbacks();
 
             }
             else if (!hit && isGrounded || !hit && isAbleToExtraJump)
@@ -197,10 +200,11 @@ public class PlayerController : MonoBehaviour
                 Quaternion rotation = Quaternion.AngleAxis(angle + 90f, Vector3.forward);
                 dustDir = rotation;
                 SpawnDashEffect(rotation, 1 + (projectileSpeed / 10));
+                playerJumpFeedback.PlayFeedbacks();
             }
 
             canTimeSlow = true;
-            playerJumpFeedback.PlayFeedbacks();
+           
         }
     }
 
