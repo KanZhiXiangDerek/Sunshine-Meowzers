@@ -5178,6 +5178,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Invinsible Colliders
       objectReference: {fileID: 0}
+    - target: {fileID: 1393774210787732487, guid: 2ba415c85cb2f804aaca492fa59fcd38, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -5.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1705164377155081317, guid: 2ba415c85cb2f804aaca492fa59fcd38, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -42.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2563103078514008136, guid: 2ba415c85cb2f804aaca492fa59fcd38, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 36.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4050814149075489402, guid: 2ba415c85cb2f804aaca492fa59fcd38, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6708491358970224378, guid: 2ba415c85cb2f804aaca492fa59fcd38, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -5220,6 +5236,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6708491358970224378, guid: 2ba415c85cb2f804aaca492fa59fcd38, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7356308467502880278, guid: 2ba415c85cb2f804aaca492fa59fcd38, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7591096358645169919, guid: 2ba415c85cb2f804aaca492fa59fcd38, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641487569402696001, guid: 2ba415c85cb2f804aaca492fa59fcd38, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -66,14 +66,18 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         cam = Camera.main.GetComponent<Camera>();
-    }
-    void Start()
-    {
         rb.velocity = Vector2.zero;
         currentGravityGainSpeed = gravityGainSpeed;
-        rb.gravityScale = 1f;
+        rb.gravityScale = 0.5f;
         gravityScale = maxGravityScale;
     }
+    //void Start()
+    //{
+    //    rb.velocity = Vector2.zero;
+    //    currentGravityGainSpeed = gravityGainSpeed;
+    //    rb.gravityScale = 0.5f;
+    //    gravityScale = maxGravityScale;
+    //}
 
     void Update()
     {
@@ -252,6 +256,7 @@ public class PlayerController : MonoBehaviour
     {
         gravityScale = 0;
         yield return new WaitForSeconds(timePeriod);
+        gravityScale = 0.5f;
     }
 
     public void SetZeroGravity(float timePeriod)

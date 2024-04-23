@@ -39,6 +39,8 @@ public class PlayerCollision : MonoBehaviour
         {      
             if (collision.gameObject.GetComponent<EnemyScipt>().IsAbleToBeDestroyed())
             {
+                rb.velocity = Vector2.zero;
+                //playerController.SetGravityScale(0f);
                 hitEnemyFeedback.PlayFeedbacks();
                 Destroy(collision.gameObject);
                 playerController.ExtraJump();
@@ -123,7 +125,6 @@ public class PlayerCollision : MonoBehaviour
         if (collision.gameObject.tag == "Platform")
         {
             hitPlatformFeedback.PlayFeedbacks();
-            //playerSM.PlayerPlatformSFX(transform.position);
             rb.velocity = Vector2.zero;
             playerController.SetZeroGravity(3.0f);
             playerController.ExtraJump();
@@ -140,7 +141,6 @@ public class PlayerCollision : MonoBehaviour
 
     private void Respawn()
     {
-        //rb.velocity = Vector2.zero;
         GameMan.instance.SetLevel();
     }
 }
