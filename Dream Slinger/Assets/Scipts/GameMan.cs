@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.Feedbacks;
+using UnityEngine.UI;
 public class GameMan : MonoBehaviour
 {
     public static GameMan instance = null;
@@ -9,6 +10,8 @@ public class GameMan : MonoBehaviour
     private GameObject currentPlayer;
 
     [SerializeField] private LevelContainer[] levels;
+
+    [SerializeField] private GameObject missionSelectionPage;
     [SerializeField] private MMF_Player screenFade;
     GameObject currentLevelPrefab;
 
@@ -30,12 +33,12 @@ public class GameMan : MonoBehaviour
 
     private void Start()
     {
-        ResetPlayerPos(levels[levelIndex].levelPrefab.GetComponent<AreaManager>().GetCheckPointPos());
+       
     }
 
     void Update()
     {
-
+        
     }
 
     public void SetLevel()
@@ -46,8 +49,32 @@ public class GameMan : MonoBehaviour
         }
         currentPlayer.transform.position = levels[levelIndex].levelPrefab.GetComponent<AreaManager>().GetCheckPointPos();
         currentLevelPrefab = Instantiate(levels[levelIndex].levelPrefab, transform.position, Quaternion.identity);
-   
-        //ResetPlayerPos(levels[levelIndex].levelPrefab.GetComponent<AreaManager>().GetCheckPointPos());
+        isSettingLevel = false;
+    }
+
+    public void SetLevelIndex(int index)
+    {
+      
+        if (index >= levels.Length)
+        {
+            Debug.Log("No Level with this index " + index);
+            index = 0;     
+        }
+        levelIndex = index;
+        if (currentLevelPrefab != null)
+        {
+            Destroy(currentLevelPrefab);
+        }
+
+        if (currentPlayer == null)
+        {
+            Vector2 spawnPos = levels[index].levelPrefab.GetComponent<AreaManager>().GetCheckPointPos();
+            currentPlayer = Instantiate(player, spawnPos, Quaternion.identity);
+        }
+      
+        currentLevelPrefab = Instantiate(levels[index].levelPrefab, transform.position, Quaternion.identity);
+        currentPlayer.transform.position = levels[index].levelPrefab.GetComponent<AreaManager>().GetCheckPointPos();
+
         isSettingLevel = false;
     }
 
@@ -58,9 +85,7 @@ public class GameMan : MonoBehaviour
             isSettingLevel = true;
             levelIndex = (levelIndex + 1) % levels.Length;
             ScreenFade();
-            Invoke("ScreenFadeOut", 1.0f);
             Invoke("SetLevel", 0.8f);
- 
         }
     }
 
@@ -82,5 +107,13 @@ public class GameMan : MonoBehaviour
     public void ScreenFade()
     {
         screenFade.PlayFeedbacks();
+    }
+
+    public void SetMissionSelectionScreen(bool boolean)
+    {
+        ScreenFade();
+        Destroy(currentLevelPrefab);
+        Destroy(currentPlayer);
+        missionSelectionPage.SetActive(boolean);
     }
 }

@@ -21,15 +21,13 @@ public class PlayerCollision : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ground")
         {
+            rb.velocity = Vector2.zero;
             landFeedback.PlayFeedbacks();
             playerController.AnimTrigger("IsLanding");
-            playerController.ResetAnimTrigger("IsJumping");
-
-
-            rb.velocity = Vector2.zero;
-
+            playerController.ResetAnimTrigger("IsJumping");    
             playerController.SetGravityScale(0f);
         }
+
         if (collision.gameObject.tag == "Obstacle")
         {
             rb.velocity = Vector2.zero;
@@ -44,7 +42,6 @@ public class PlayerCollision : MonoBehaviour
                 hitEnemyFeedback.PlayFeedbacks();
                 Destroy(collision.gameObject);
                 playerController.ExtraJump();
-                
             }
             else
             {
@@ -98,13 +95,11 @@ public class PlayerCollision : MonoBehaviour
         {
             hitPortalFeedback.PlayFeedbacks();
             rb.velocity = Vector2.zero;
-            //transform.position = Vector2.MoveTowards(transform.position, collision.transform.position, 100f * Time.deltaTime);
             GameMan.instance.NextLevel();
         }
 
         if (collision.gameObject.tag == "EnemyDetection")
         {
-            //Respawn();
             EnemyDetect enemyDetect = collision.gameObject.GetComponent<EnemyDetect>();
             enemyDetect.SetEnemyAbleToDestroy(false);
         }
@@ -145,7 +140,7 @@ public class PlayerCollision : MonoBehaviour
 
     private void Respawn()
     {
-        rb.velocity = Vector2.zero;
+        //rb.velocity = Vector2.zero;
         GameMan.instance.SetLevel();
     }
 }

@@ -66,21 +66,25 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         cam = Camera.main.GetComponent<Camera>();
-        
     }
     void Start()
     {
         rb.velocity = Vector2.zero;
         currentGravityGainSpeed = gravityGainSpeed;
+        rb.gravityScale = 1f;
         gravityScale = maxGravityScale;
     }
 
-    // Update is called once per frame
     void Update()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
         isNearEnemy = Physics2D.OverlapCircle(transform.position, enemyCheckRadius, whatIsEnemy);
-        
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            GameMan.instance.SetMissionSelectionScreen(true);
+        }
+
         if (!isGrounded)
         {
             float rotationSpeed = 10f + (projectileSpeed / 10);

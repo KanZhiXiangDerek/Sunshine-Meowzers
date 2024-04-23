@@ -36,7 +36,7 @@ Transform:
 --- !u!198 &7021565257324413945
 ParticleSystem:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 216423238144678604, guid: a887360008ff1f0408b3fb30255cba13, type: 3}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8406777217801652434}
@@ -48,7 +48,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 0
+  looping: 1
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -222,8 +222,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 0.4417464, g: 0.37254906, b: 0.8666667, a: 1}
-      maxColor: {r: 0.26994035, g: 0.26666665, b: 1, a: 1}
+      minColor: {r: 0.37254906, g: 0.8666667, b: 0.7306123, a: 1}
+      maxColor: {r: 1, g: 0.9296747, b: 0.26666665, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -1421,7 +1421,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
   UVModule:
     serializedVersion: 2
-    enabled: 0
+    enabled: 1
     mode: 1
     timeMode: 0
     fps: 30
@@ -1540,7 +1540,7 @@ ParticleSystem:
     uvChannelMask: -1
     rowMode: 1
     sprites:
-    - sprite: {fileID: 21300000, guid: 5a0aefd466824b44a913443fc521fa2c, type: 3}
+    - sprite: {fileID: 21300000, guid: cafd8db41a1acf546b40bc9afe471c34, type: 3}
     flipU: 0
     flipV: 0
   VelocityModule:
