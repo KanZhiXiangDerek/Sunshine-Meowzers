@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using MoreMountains.Feedbacks;
+using System.Runtime.InteropServices;
 public class PlayerController : MonoBehaviour
 {
     [Header("References"), Space(10)]
@@ -29,6 +30,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Vector2 enemyCheckBox;
     [SerializeField] float enemyCheckRadius = 5.0f;
     [SerializeField] float counterForceScale = 0.3f;
+    [SerializeField] float jumpCD = 0.2f;
+    float currentJumpCD;
 
     [Header("Player Feedback"), Space(10)]
     [SerializeField] MMF_Player playerPreJumpFeedback;
@@ -36,6 +39,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] MMF_Player playerJumpFeedback;
     [SerializeField] MMF_Player playerPreEnemyJumpFeedback;
     [SerializeField] MMF_Player playerEnemyJumpFeedback;
+    [SerializeField] MMF_Player playerCannotJump;
     [SerializeField] private GameObject dashEffect;
     [SerializeField] private GameObject strongDashEffect;
     [SerializeField] private GameObject dustParticle;
@@ -70,6 +74,9 @@ public class PlayerController : MonoBehaviour
         currentGravityGainSpeed = gravityGainSpeed;
         rb.gravityScale = 0.5f;
         gravityScale = maxGravityScale;
+        currentJumpCD = jumpCD;
+        Cursor.visible = false;
+
     }
     //void Start()
     //{
@@ -83,6 +90,7 @@ public class PlayerController : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
         isNearEnemy = Physics2D.OverlapCircle(transform.position, enemyCheckRadius, whatIsEnemy);
+        currentJumpCD -= Time.deltaTime;
 
         if (Input.GetKeyDown(KeyCode.P))
         {
@@ -122,6 +130,8 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.lockState = CursorLockMode.None;
             startPoint = cam.ScreenToWorldPoint(Input.mousePosition);
             playerAnim.ResetTrigger("IsLanding");
             playerAnim.SetTrigger("IsAiming");
@@ -132,6 +142,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Mouse0))
         {
+            //Cursor.lockState = CursorLockMode.None;
             playerPreJumpChargeFeedback.PlayFeedbacks();
             preJumpPos = transform.position;
             currentPoint = cam.ScreenToWorldPoint(Input.mousePosition);
@@ -167,12 +178,9 @@ public class PlayerController : MonoBehaviour
             projectileSpeed = dragDistance * 2.5f;
             projectileSpeed = Mathf.Clamp(projectileSpeed, minProjectileSpd, maxProjectileSpd);
 
-
-            gravityScale = 0;
-
             if (hit.collider && isNearEnemy || hit.collider && isGrounded || hit.collider && isAbleToExtraJump)
             {
-
+                gravityScale = 0;
                 isAbleToExtraJump = false;
 
                 Vector2 enemyDirection = (transform.position - hit.transform.position).normalized; // Calculate the direction vector
@@ -186,8 +194,9 @@ public class PlayerController : MonoBehaviour
                 playerEnemyJumpFeedback.PlayFeedbacks();
 
             }
-            else if (!hit && isGrounded || !hit && isAbleToExtraJump)
+            else if (!hit && isGrounded && currentJumpCD <= 0 || !hit && isAbleToExtraJump && currentJumpCD <= 0)
             {
+                gravityScale = 0;
                 isAbleToExtraJump = false;
                 adjustedDir = new Vector2(direction.x * xShootScale, direction.y * yShootScale);
 
@@ -203,6 +212,11 @@ public class PlayerController : MonoBehaviour
                 dustDir = rotation;
                 SpawnDashEffect(rotation, 1 + (projectileSpeed / 10));
                 playerJumpFeedback.PlayFeedbacks();
+                currentJumpCD = jumpCD;
+            }
+            else
+            {
+                playerCannotJump.PlayFeedbacks();
             }
         }
     }

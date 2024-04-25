@@ -111,6 +111,8 @@ public class GameMan : MonoBehaviour
 
     public void SetMissionSelectionScreen(bool boolean)
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         ScreenFade();
         Destroy(currentLevelPrefab);
         Destroy(currentPlayer);

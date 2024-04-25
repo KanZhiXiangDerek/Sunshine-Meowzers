@@ -141,6 +141,7 @@ public class PlayerCollision : MonoBehaviour
 
     private void Respawn()
     {
+        rb.velocity = Vector2.zero;
         GameMan.instance.SetLevel();
     }
 }
