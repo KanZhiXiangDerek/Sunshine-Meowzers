@@ -117,7 +117,7 @@ public class PlayerCollision : MonoBehaviour
             if (plat.GetWait() == false)
             {
                 transform.position = Vector2.MoveTowards(transform.position, collision.transform.position, 100f * Time.deltaTime);
-                   
+                    
             }
         }
     }
@@ -127,7 +127,7 @@ public class PlayerCollision : MonoBehaviour
         {
             hitPlatformFeedback.PlayFeedbacks();
             rb.velocity = Vector2.zero;
-            playerController.SetZeroGravity(3.0f);
+            playerController.SetZeroGravity(0.1f);
             playerController.ExtraJump();
             Destroy(collision.gameObject);
         }
