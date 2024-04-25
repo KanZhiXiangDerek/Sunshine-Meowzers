@@ -40,7 +40,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8650325466784613221}
-  - component: {fileID: 8650325466784613220}
   m_Layer: 0
   m_Name: Moving Object
   m_TagString: Untagged
@@ -66,24 +65,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8650325466784613220
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8650325466784613218}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03e12be6efd20474a995ad214c76730b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wayPoints:
-  - {fileID: 8650325467767367095}
-  - {fileID: 8650325465821383533}
-  movSpeed: 5
-  containsWaitTime: 1
-  waitTime: 0.5
 --- !u!1 &8650325467767367092
 GameObject:
   m_ObjectHideFlags: 0
@@ -126,6 +107,7 @@ GameObject:
   - component: {fileID: 8650325467825741817}
   - component: {fileID: 8650325467825741816}
   - component: {fileID: 8650325467825741819}
+  - component: {fileID: 8887508856265341135}
   m_Layer: 0
   m_Name: Square
   m_TagString: Obstacle
@@ -226,3 +208,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &8887508856265341135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8650325467825741798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e12be6efd20474a995ad214c76730b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wayPoints:
+  - {fileID: 8650325467767367095}
+  - {fileID: 8650325465821383533}
+  movSpeed: 5
+  containsWaitTime: 1
+  waitTime: 0.5

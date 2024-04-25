@@ -116,7 +116,8 @@ public class PlayerCollision : MonoBehaviour
             plat.MoveToWayPoint();
             if (plat.GetWait() == false)
             {
-                transform.position = collision.transform.position;
+                transform.position = Vector2.MoveTowards(transform.position, collision.transform.position, 100f * Time.deltaTime);
+                   
             }
         }
     }
@@ -128,6 +129,7 @@ public class PlayerCollision : MonoBehaviour
             rb.velocity = Vector2.zero;
             playerController.SetZeroGravity(3.0f);
             playerController.ExtraJump();
+            Destroy(collision.gameObject);
         }
 
         if (collision.gameObject.tag == "EnemyDetection")

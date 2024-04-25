@@ -70,12 +70,11 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         cam = Camera.main.GetComponent<Camera>();
-        rb.velocity = Vector2.zero;
         currentGravityGainSpeed = gravityGainSpeed;
         rb.gravityScale = 0.5f;
         gravityScale = maxGravityScale;
         currentJumpCD = jumpCD;
-        Cursor.visible = false;
+        //Cursor.visible = false;
 
     }
     //void Start()
