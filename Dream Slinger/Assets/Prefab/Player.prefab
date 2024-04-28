@@ -3623,7 +3623,7 @@ MonoBehaviour:
         DebugActive: 0
         Mode: 0
         TimeScale: 0.8
-        TimeScaleDuration: 0.1
+        TimeScaleDuration: 0.05
         ResetTimescaleOnStop: 1
         TimeScaleLerp: 0
         TimescaleLerpMode: 0
@@ -6967,7 +6967,7 @@ MonoBehaviour:
         DebugActive: 0
         Mode: 0
         TimeScale: 0.25
-        TimeScaleDuration: 0.2
+        TimeScaleDuration: 0.1
         ResetTimescaleOnStop: 0
         TimeScaleLerp: 0
         TimescaleLerpMode: 0

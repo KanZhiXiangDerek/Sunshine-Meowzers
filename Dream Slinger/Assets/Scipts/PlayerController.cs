@@ -195,7 +195,7 @@ public class PlayerController : MonoBehaviour
                 playerEnemyJumpFeedback.PlayFeedbacks();
 
             }
-            else if (!hit && isGrounded && currentJumpCD <= 0 || !hit && isAbleToExtraJump && currentJumpCD <= 0)
+            else if (!hit && isGrounded && currentJumpCD <= 0 || !hit && isAbleToExtraJump)
             {
                 gravityScale = 0;
                 isAbleToExtraJump = false;

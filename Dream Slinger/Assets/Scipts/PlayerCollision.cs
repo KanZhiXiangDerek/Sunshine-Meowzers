@@ -24,7 +24,7 @@ public class PlayerCollision : MonoBehaviour
             rb.velocity = Vector2.zero;
             landFeedback.PlayFeedbacks();
             playerController.AnimTrigger("IsLanding");
-            playerController.ResetAnimTrigger("IsJumping");    
+            playerController.ResetAnimTrigger("IsJumping");
             playerController.SetGravityScale(0f);
         }
 
@@ -48,15 +48,13 @@ public class PlayerCollision : MonoBehaviour
         }
 
         if (collision.gameObject.tag == "Enemy")
-        {      
+        {
             if (collision.gameObject.GetComponent<EnemyScipt>().IsAbleToBeDestroyed())
             {
-                rb.velocity = Vector2.zero;
-                //playerController.SetGravityScale(0f);
-                hitEnemyFeedback.PlayFeedbacks();
                 Destroy(collision.gameObject);
-                playerController.StartCoroutine(playerController.EnableExtraJump(1.0f));
-                //playerController.ExtraJump();
+                rb.velocity = Vector2.zero;
+                hitEnemyFeedback.PlayFeedbacks();
+                playerController.StartCoroutine(playerController.EnableExtraJump(2.0f));
             }
             else
             {
@@ -82,6 +80,14 @@ public class PlayerCollision : MonoBehaviour
         {
             playerController.SetGravityGainSpeedToOG();
         }
+
+        if (collision.gameObject.tag == "Enemy")
+        {
+            if (collision.gameObject.GetComponent<EnemyScipt>().IsAbleToBeDestroyed())
+            {
+                playerController.StartCoroutine(playerController.EnableExtraJump(1.0f));
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -96,14 +102,14 @@ public class PlayerCollision : MonoBehaviour
 
         if (collision.gameObject.tag == "Platform")
         {
-           
+
             MovingPlatform plat = collision.gameObject.GetComponent<MovingPlatform>();
             if (plat.GetWait() == false)
             {
                 hitPlatformFeedback.PlayFeedbacks();
                 transform.position = Vector2.MoveTowards(transform.position, collision.transform.position, 100f * Time.deltaTime);
             }
-        
+
         }
 
         if (collision.gameObject.tag == "EndPoint")
@@ -129,8 +135,8 @@ public class PlayerCollision : MonoBehaviour
             plat.MoveToWayPoint();
             if (plat.GetWait() == false)
             {
-                transform.position = Vector2.MoveTowards(transform.position, collision.transform.position, 100f * Time.deltaTime);
-                    
+                transform.position = Vector2.MoveTowards(transform.position, collision.transform.position, 200f * Time.deltaTime);
+
             }
         }
     }
@@ -138,12 +144,11 @@ public class PlayerCollision : MonoBehaviour
     {
         if (collision.gameObject.tag == "Platform")
         {
+            Destroy(collision.gameObject);
             hitPlatformFeedback.PlayFeedbacks();
             rb.velocity = Vector2.zero;
             playerController.SetZeroGravity(0.1f);
-            playerController.StartCoroutine(playerController.EnableExtraJump(1.0f));
-            //playerController.ExtraJump();
-            Destroy(collision.gameObject);
+            playerController.StartCoroutine(playerController.EnableExtraJump(2.0f));
         }
 
         if (collision.gameObject.tag == "EnemyDetection")
