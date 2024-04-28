@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] MMF_Player playerPreEnemyJumpFeedback;
     [SerializeField] MMF_Player playerEnemyJumpFeedback;
     [SerializeField] MMF_Player playerCannotJump;
+    [SerializeField] MMF_Player playerCanExtraJump;
     [SerializeField] private GameObject dashEffect;
     [SerializeField] private GameObject strongDashEffect;
     [SerializeField] private GameObject dustParticle;
@@ -95,6 +96,7 @@ public class PlayerController : MonoBehaviour
         {
             GameMan.instance.SetMissionSelectionScreen(true);
         }
+
 
         if (!isGrounded)
         {
@@ -258,10 +260,12 @@ public class PlayerController : MonoBehaviour
     {
         StartCoroutine(EnableExtraJump(extraJumpTime));
     }
-    private IEnumerator EnableExtraJump(float timePeriod)
+    public IEnumerator EnableExtraJump(float timePeriod)
     {
         isAbleToExtraJump = true;
-        yield return new WaitForSeconds(timePeriod);
+        yield return new WaitForSeconds(0.5f);
+        playerCanExtraJump.PlayFeedbacks();
+        yield return new WaitForSeconds(timePeriod - 0.5f);
         isAbleToExtraJump = false;
     }
 

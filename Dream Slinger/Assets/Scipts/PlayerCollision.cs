@@ -28,6 +28,18 @@ public class PlayerCollision : MonoBehaviour
             playerController.SetGravityScale(0f);
         }
 
+        if (collision.gameObject.tag == "FallingPlatform")
+        {
+            rb.velocity = Vector2.zero;
+            landFeedback.PlayFeedbacks();
+            playerController.AnimTrigger("IsLanding");
+            playerController.ResetAnimTrigger("IsJumping");
+            playerController.SetGravityScale(0f);
+            FallingPlatform fallingPlatform = collision.gameObject.GetComponent<FallingPlatform>();
+            fallingPlatform.PlayerStepOnPlatform();
+            fallingPlatform.SetPlayerOnPlatform(true);
+        }
+
         if (collision.gameObject.tag == "Obstacle")
         {
             rb.velocity = Vector2.zero;
@@ -43,7 +55,8 @@ public class PlayerCollision : MonoBehaviour
                 //playerController.SetGravityScale(0f);
                 hitEnemyFeedback.PlayFeedbacks();
                 Destroy(collision.gameObject);
-                playerController.ExtraJump();
+                playerController.StartCoroutine(playerController.EnableExtraJump(1.0f));
+                //playerController.ExtraJump();
             }
             else
             {
@@ -128,7 +141,8 @@ public class PlayerCollision : MonoBehaviour
             hitPlatformFeedback.PlayFeedbacks();
             rb.velocity = Vector2.zero;
             playerController.SetZeroGravity(0.1f);
-            playerController.ExtraJump();
+            playerController.StartCoroutine(playerController.EnableExtraJump(1.0f));
+            //playerController.ExtraJump();
             Destroy(collision.gameObject);
         }
 

@@ -13,6 +13,7 @@ TagManager:
   - EndPoint
   - SlowDownArea
   - Platform
+  - FallingPlatform
   layers:
   - Default
   - TransparentFX
