@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 3319330841444367057}
   - component: {fileID: 3319330841444367056}
   - component: {fileID: 3319330841444367059}
+  - component: {fileID: 3918362713771864120}
   m_Layer: 5
   m_Name: Mission Button
   m_TagString: Untagged
@@ -200,6 +201,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3918362713771864120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3319330841444367053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cf89f74ab0835b479ae781390c43e6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3319330841704022220
 GameObject:
   m_ObjectHideFlags: 0

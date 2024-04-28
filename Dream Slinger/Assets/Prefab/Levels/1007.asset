@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelID: 0
   levelPrefab: {fileID: 4077042057338656154, guid: e1039c8e57b934940a7393e07d7742c7, type: 3}
+  bestCompletionTime: 0
   levelIsCompleted: 0

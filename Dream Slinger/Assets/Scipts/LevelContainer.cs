@@ -8,5 +8,6 @@ public class LevelContainer : ScriptableObject
 {
     public int levelID;
     public GameObject levelPrefab;
+    public float bestCompletionTime;
     public bool levelIsCompleted;
 }

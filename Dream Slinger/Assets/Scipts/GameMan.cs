@@ -17,6 +17,8 @@ public class GameMan : MonoBehaviour
 
     private int levelIndex;
     bool isSettingLevel;
+
+    float timer;
     private void Awake()
     {
         if (instance == null)
@@ -38,7 +40,7 @@ public class GameMan : MonoBehaviour
 
     void Update()
     {
-        
+        timer += Time.deltaTime;
     }
 
     public void SetLevel()
@@ -47,6 +49,7 @@ public class GameMan : MonoBehaviour
         {
             Destroy(currentLevelPrefab);
         }
+
         currentPlayer.transform.position = levels[levelIndex].levelPrefab.GetComponent<AreaManager>().GetCheckPointPos();
         currentLevelPrefab = Instantiate(levels[levelIndex].levelPrefab, transform.position, Quaternion.identity);
         isSettingLevel = false;
@@ -54,7 +57,7 @@ public class GameMan : MonoBehaviour
 
     public void SetLevelIndex(int index)
     {
-      
+        timer = 0;
         if (index >= levels.Length)
         {
             Debug.Log("No Level with this index " + index);
@@ -83,6 +86,27 @@ public class GameMan : MonoBehaviour
         if (!isSettingLevel)
         {
             isSettingLevel = true;
+            if(levels[levelIndex].levelIsCompleted == false)
+            {
+                levels[levelIndex].levelIsCompleted = true;
+                levels[levelIndex].bestCompletionTime = timer;
+                Debug.Log("Level " + (levelIndex + 1) + " is completed for the first time at " + timer);
+                timer = 0;
+            }
+            else
+            {
+                if (timer <= levels[levelIndex].bestCompletionTime)
+                {
+                    levels[levelIndex].bestCompletionTime = timer;
+                    Debug.Log("Level " + (levelIndex + 1) + " is completed faster at " + timer);
+                }
+                else
+                {
+                    Debug.Log("Level " + (levelIndex + 1) + " is completed slower at " + timer);
+                }
+                timer = 0;
+            }
+          
             levelIndex = (levelIndex + 1) % levels.Length;
             ScreenFade();
             Invoke("SetLevel", 0.8f);
