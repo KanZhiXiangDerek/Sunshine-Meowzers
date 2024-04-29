@@ -6409,7 +6409,7 @@ MonoBehaviour:
   enemyCheckBox: {x: 0.1, y: 1}
   enemyCheckRadius: 20
   counterForceScale: 0.33
-  jumpCD: 0.2
+  jumpCD: 0.05
   playerPreJumpFeedback: {fileID: 5374503211698975145}
   playerPreJumpChargeFeedback: {fileID: 6873116632772296973}
   playerJumpFeedback: {fileID: 5967127408101997333}

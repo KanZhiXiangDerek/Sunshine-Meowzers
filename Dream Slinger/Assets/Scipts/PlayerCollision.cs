@@ -102,7 +102,6 @@ public class PlayerCollision : MonoBehaviour
 
         if (collision.gameObject.tag == "Platform")
         {
-
             MovingPlatform plat = collision.gameObject.GetComponent<MovingPlatform>();
             if (plat.GetWait() == false)
             {

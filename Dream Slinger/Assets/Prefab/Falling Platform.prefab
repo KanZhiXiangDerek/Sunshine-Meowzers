@@ -75,7 +75,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformHealthPoints: 20
   currentHealthPoints: 0
-  platformHealthDropRate: 7.5
+  platformHealthDropRate: 10
   platformBlinkFB: {fileID: 833013066572932101}
 --- !u!1 &4566046961078546044
 GameObject:
