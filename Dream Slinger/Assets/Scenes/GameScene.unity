@@ -1725,6 +1725,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mission Selection Page
       objectReference: {fileID: 0}
+    - target: {fileID: 4873286384188730180, guid: 627020639324cfa48bd099dc9ff70f68, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4873286384188730181, guid: 627020639324cfa48bd099dc9ff70f68, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
