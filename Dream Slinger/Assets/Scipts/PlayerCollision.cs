@@ -105,6 +105,7 @@ public class PlayerCollision : MonoBehaviour
             MovingPlatform plat = collision.gameObject.GetComponent<MovingPlatform>();
             if (plat.GetWait() == false)
             {
+                playerController.StartCoroutine(playerController.EnableExtraJump(3.0f));
                 hitPlatformFeedback.PlayFeedbacks();
                 transform.position = Vector2.MoveTowards(transform.position, collision.transform.position, 100f * Time.deltaTime);
             }
@@ -113,15 +114,31 @@ public class PlayerCollision : MonoBehaviour
 
         if (collision.gameObject.tag == "EndPoint")
         {
-            hitPortalFeedback.PlayFeedbacks();
-            rb.velocity = Vector2.zero;
-            GameMan.instance.NextLevel();
+            if (collision.GetComponent<PortalScipt>().GetPortalBoolean())
+            {
+                hitPortalFeedback.PlayFeedbacks();
+                rb.velocity = Vector2.zero;
+                GameMan.instance.NextLevel();
+            }
+            else
+            {
+                rb.velocity = Vector2.zero;
+                deathFeedback.PlayFeedbacks();
+                Invoke("Respawn", 0.2f);
+            }
         }
 
         if (collision.gameObject.tag == "EnemyDetection")
         {
             EnemyDetect enemyDetect = collision.gameObject.GetComponent<EnemyDetect>();
             enemyDetect.SetEnemyAbleToDestroy(false);
+        }
+
+        if (collision.gameObject.tag == "Key")
+        {
+            KeyScipt keyScipt = collision.gameObject.GetComponent<KeyScipt>();
+            keyScipt.CollectKey();
+            Destroy(collision.gameObject);
         }
 
     }
@@ -143,11 +160,11 @@ public class PlayerCollision : MonoBehaviour
     {
         if (collision.gameObject.tag == "Platform")
         {
-            Destroy(collision.gameObject);
             hitPlatformFeedback.PlayFeedbacks();
             rb.velocity = Vector2.zero;
-            playerController.SetZeroGravity(0.1f);
+            playerController.SetZeroGravity(1.0f);
             playerController.StartCoroutine(playerController.EnableExtraJump(2.0f));
+            Destroy(collision.gameObject);
         }
 
         if (collision.gameObject.tag == "EnemyDetection")

@@ -265,7 +265,7 @@ public class PlayerController : MonoBehaviour
         isAbleToExtraJump = true;
         yield return new WaitForSeconds(0.5f);
         playerCanExtraJump.PlayFeedbacks();
-        yield return new WaitForSeconds(timePeriod - 0.5f);
+        yield return new WaitForSeconds(timePeriod);
         isAbleToExtraJump = false;
     }
 
