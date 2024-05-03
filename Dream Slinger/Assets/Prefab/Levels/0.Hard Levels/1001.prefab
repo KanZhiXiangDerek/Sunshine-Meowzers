@@ -182,6 +182,7 @@ Transform:
   - {fileID: 948531124711848938}
   - {fileID: 8354256606810747991}
   - {fileID: 2941824780561750776}
+  - {fileID: 8483988203349805707}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3409,6 +3410,72 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8295294503190388432, guid: 12cd34e73ed019947859b797513dc5ab, type: 3}
   m_PrefabInstance: {fileID: 774934812733340520}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3302993845874408794
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4077042057338656152}
+    m_Modifications:
+    - target: {fileID: 4312578705732738274, guid: 8e779d1f05123094b9d3037c1a834c42, type: 3}
+      propertyPath: m_Name
+      value: Orb Key
+      objectReference: {fileID: 0}
+    - target: {fileID: 6371389736168208337, guid: 8e779d1f05123094b9d3037c1a834c42, type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 6371389736168208337, guid: 8e779d1f05123094b9d3037c1a834c42, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 6371389736168208337, guid: 8e779d1f05123094b9d3037c1a834c42, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 6371389736168208337, guid: 8e779d1f05123094b9d3037c1a834c42, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6371389736168208337, guid: 8e779d1f05123094b9d3037c1a834c42, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6371389736168208337, guid: 8e779d1f05123094b9d3037c1a834c42, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6371389736168208337, guid: 8e779d1f05123094b9d3037c1a834c42, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6371389736168208337, guid: 8e779d1f05123094b9d3037c1a834c42, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6371389736168208337, guid: 8e779d1f05123094b9d3037c1a834c42, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6371389736168208337, guid: 8e779d1f05123094b9d3037c1a834c42, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6371389736168208337, guid: 8e779d1f05123094b9d3037c1a834c42, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6505240316400673108, guid: 8e779d1f05123094b9d3037c1a834c42, type: 3}
+      propertyPath: assignPortal
+      value: 
+      objectReference: {fileID: 1135564804984579817}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8e779d1f05123094b9d3037c1a834c42, type: 3}
+--- !u!4 &8483988203349805707 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6371389736168208337, guid: 8e779d1f05123094b9d3037c1a834c42, type: 3}
+  m_PrefabInstance: {fileID: 3302993845874408794}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4321990462784507718
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3416,6 +3483,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4077042057338656152}
     m_Modifications:
+    - target: {fileID: 3762930391777749423, guid: 812c04e4271fb7b4dac860e13efe4bb2, type: 3}
+      propertyPath: canPortal
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5742069564891550435, guid: 812c04e4271fb7b4dac860e13efe4bb2, type: 3}
       propertyPath: m_Size.x
       value: 38
@@ -7298,6 +7369,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 812c04e4271fb7b4dac860e13efe4bb2, type: 3}
+--- !u!114 &1135564804984579817 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3762930391777749423, guid: 812c04e4271fb7b4dac860e13efe4bb2, type: 3}
+  m_PrefabInstance: {fileID: 4321990462784507718}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27088fcaf6f425f4eb7318cf6ac7f575, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8382648842879451666 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5742069565317107028, guid: 812c04e4271fb7b4dac860e13efe4bb2, type: 3}
@@ -7598,6 +7680,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4077042057338656152}
     m_Modifications:
+    - target: {fileID: 1303808052988248510, guid: cdbf974924ded1447b4d774376f74bf3, type: 3}
+      propertyPath: managedReferences[3246607672137482243].NewText
+      value: Collect The Orb Key To Open The Portal
+      objectReference: {fileID: 0}
+    - target: {fileID: 5654811713837367800, guid: cdbf974924ded1447b4d774376f74bf3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5654811713837367807, guid: cdbf974924ded1447b4d774376f74bf3, type: 3}
+      propertyPath: m_fontSize
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5654811713837367807, guid: cdbf974924ded1447b4d774376f74bf3, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5654811714024320179, guid: cdbf974924ded1447b4d774376f74bf3, type: 3}
       propertyPath: m_RootOrder
       value: 12
