@@ -29,8 +29,7 @@ Transform:
   m_LocalPosition: {x: -0.0568, y: -5.9913, z: 0}
   m_LocalScale: {x: 4.9489665, y: 20.30602, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1110028827757415245}
+  m_Children: []
   m_Father: {fileID: 1110028826844276827}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -123,7 +122,7 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.67
-  m_Color: {r: 0.920016, g: 0.44716978, b: 1, a: 1}
+  m_Color: {r: 0.8581562, g: 0, b: 1, a: 1}
   m_Intensity: 0.5
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
@@ -337,7 +336,8 @@ Transform:
   m_LocalPosition: {x: -0.055825002, y: -0.25881213, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 1110028827757415245}
   m_Father: {fileID: 1110028826844276827}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -418,12 +418,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1110028827757415282}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0.6991239, w: 0.71500057}
+  m_LocalPosition: {x: -2.8655334, y: -0.06386423, z: 0}
+  m_LocalScale: {x: 2.474483, y: 10.15301, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1110028826018978160}
+  m_Father: {fileID: 1110028827127948065}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1110028827757415244
@@ -442,7 +442,7 @@ MonoBehaviour:
   m_LightType: 1
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
-  m_Color: {r: 1, g: 0.390566, b: 0.390566, a: 1}
+  m_Color: {r: 1, g: 0.39215684, b: 0.91146624, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
@@ -529,7 +529,7 @@ MonoBehaviour:
   timeBtwRadiusLerp: 10
   colors:
   - serializedVersion: 2
-    rgba: 4286019583
+    rgba: 4294866943
   - serializedVersion: 2
-    rgba: 4289296383
+    rgba: 4294932454
   timeBtwColor: 10

@@ -51,6 +51,7 @@ public class GameMan : MonoBehaviour
         }
 
         currentPlayer.transform.position = levels[levelIndex].levelPrefab.GetComponent<AreaManager>().GetCheckPointPos();
+        player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         currentLevelPrefab = Instantiate(levels[levelIndex].levelPrefab, transform.position, Quaternion.identity);
         isSettingLevel = false;
     }
@@ -109,7 +110,7 @@ public class GameMan : MonoBehaviour
           
             levelIndex = (levelIndex + 1) % levels.Length;
             ScreenFade();
-            Invoke("SetLevel", 0.8f);
+            Invoke("SetLevel", 1.0f);
         }
     }
 

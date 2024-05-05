@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using MoreMountains.Feedbacks;
 public class EnemyScipt : MonoBehaviour
 {
     [SerializeField] private bool ableToBeDestroyed;
@@ -14,6 +14,7 @@ public class EnemyScipt : MonoBehaviour
     [SerializeField] private Transform sp;
     [SerializeField] private float projectileSpd = 8.0f;
     [SerializeField] private float shootPerXSeconds = 1.5f;
+    [SerializeField] private MMF_Player preShotFeedback;
     bool isFiring;
 
     private void Start()
@@ -41,6 +42,8 @@ public class EnemyScipt : MonoBehaviour
     {
         isFiring = true;
         Debug.Log("Enemy  Shoot");
+        preShotFeedback.PlayFeedbacks();
+        yield return new WaitForSeconds(0.2f);
         Transform player = GameMan.instance.GetPlayerObj().transform;
 
         GameObject enemyProjectile = Instantiate(projectile, sp.position, Quaternion.identity);

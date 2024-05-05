@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask whatIsEnemy;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Transform rayCastPos;
+    [SerializeField] private EchoEffect echo;
     private Quaternion dustDir;
 
     [Header("Drag & Shoot"), Space(10)]
@@ -54,11 +55,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float groundCheckRadius = 0.5f;
 
     [Header("Bool Check"), Space(10)]
+    [SerializeField] bool enableControls;
     [SerializeField] bool isGrounded;
     [SerializeField] bool isAbleToExtraJump;
     [SerializeField] bool isNearEnemy;
     [SerializeField] bool canCounterForce;
-
+    private Coroutine extraJumpRoutine;
+    private List<Coroutine> extraJumpCoro;
     //[Header("Others"), Space(10)]
     Vector2 mousePos;
     Vector2 startPoint;
@@ -72,22 +75,23 @@ public class PlayerController : MonoBehaviour
     {
         cam = Camera.main.GetComponent<Camera>();
         currentGravityGainSpeed = gravityGainSpeed;
-        rb.gravityScale = 0.5f;
         gravityScale = maxGravityScale;
         currentJumpCD = jumpCD;
         //Cursor.visible = false;
-
     }
-    //void Start()
-    //{
-    //    rb.velocity = Vector2.zero;
-    //    currentGravityGainSpeed = gravityGainSpeed;
-    //    rb.gravityScale = 0.5f;
-    //    gravityScale = maxGravityScale;
-    //}
+
+    private void Start()
+    {
+        Invoke("EnableControls", 0.5f);
+        rb.gravityScale = 0.5f;
+    }
 
     void Update()
     {
+        if (!enableControls)
+        {
+            rb.velocity = Vector2.zero;
+        }
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
         isNearEnemy = Physics2D.OverlapCircle(transform.position, enemyCheckRadius, whatIsEnemy);
         currentJumpCD -= Time.deltaTime;
@@ -116,6 +120,7 @@ public class PlayerController : MonoBehaviour
             {
                 playerSprite.GetComponent<SpriteRenderer>().flipX = false;
             }
+            echo.SetCanSpawnEffect(true);
 
         }
         else
@@ -127,12 +132,15 @@ public class PlayerController : MonoBehaviour
             playerSprite.transform.rotation = Quaternion.Slerp(playerSprite.transform.rotation, rotation, rotationSpeed * Time.deltaTime);
             dustParticle.transform.rotation = Quaternion.Slerp(dustParticle.transform.rotation, rotation, rotationSpeed * 1.5f * Time.deltaTime);
             dustDir = Quaternion.Euler(dustParticle.transform.rotation.x, dustParticle.transform.rotation.y, dustParticle.transform.rotation.z);
+
+            echo.SetCanSpawnEffect(false);
         }
+
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             Cursor.lockState = CursorLockMode.Locked;
-            Cursor.lockState = CursorLockMode.None;
+           
             startPoint = cam.ScreenToWorldPoint(Input.mousePosition);
             playerAnim.ResetTrigger("IsLanding");
             playerAnim.SetTrigger("IsAiming");
@@ -143,7 +151,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Mouse0))
         {
-            //Cursor.lockState = CursorLockMode.None;
+            Cursor.lockState = CursorLockMode.None;
             playerPreJumpChargeFeedback.PlayFeedbacks();
             preJumpPos = transform.position;
             currentPoint = cam.ScreenToWorldPoint(Input.mousePosition);
@@ -165,24 +173,24 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
-
             trajectory.HideDot();
             endPoint = cam.ScreenToWorldPoint(Input.mousePosition);
             direction = (endPoint - startPoint).normalized; // Calculate the direction vector
             RaycastHit2D hit = Physics2D.BoxCast(rayCastPos.position, enemyCheckBox, 0f, -direction, enemyCheckRadius, whatIsEnemy);
+
             playerAnim.ResetTrigger("IsAiming");
             playerAnim.SetTrigger("IsJumping");
 
             Vector2 adjustedDir;
             dragDistance = Vector2.Distance(endPoint, startPoint);
             Debug.DrawLine(startPoint, endPoint);
+
             projectileSpeed = dragDistance * 2.5f;
             projectileSpeed = Mathf.Clamp(projectileSpeed, minProjectileSpd, maxProjectileSpd);
 
             if (hit.collider && isNearEnemy || hit.collider && isGrounded || hit.collider && isAbleToExtraJump)
             {
                 gravityScale = 0;
-                isAbleToExtraJump = false;
 
                 Vector2 enemyDirection = (transform.position - hit.transform.position).normalized; // Calculate the direction vector
                 rb.velocity = rb.velocity * 0.01f;
@@ -193,20 +201,20 @@ public class PlayerController : MonoBehaviour
                 dustDir = rotation;
                 SpawnStrongDashEffect(rotation);
                 playerEnemyJumpFeedback.PlayFeedbacks();
+                isAbleToExtraJump = false;
 
             }
-            else if (!hit && isGrounded && currentJumpCD <= 0 || !hit && isAbleToExtraJump)
+            else if (!hit && isGrounded && currentJumpCD <= 0 || isAbleToExtraJump)
             {
                 gravityScale = 0;
-                isAbleToExtraJump = false;
                 adjustedDir = new Vector2(direction.x * xShootScale, direction.y * yShootScale);
 
-              
+
                 StartCoroutine(CounterForce(adjustedDir, projectileSpeed));
                 rb.velocity = rb.velocity * 0.01f;
                 rb.AddForce(-adjustedDir * projectileSpeed, ForceMode2D.Impulse);
                 Debug.Log("Projectile Speed " + projectileSpeed);
-               
+
 
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 Quaternion rotation = Quaternion.AngleAxis(angle + 90f, Vector3.forward);
@@ -214,6 +222,7 @@ public class PlayerController : MonoBehaviour
                 SpawnDashEffect(rotation, 1 + (projectileSpeed / 10));
                 playerJumpFeedback.PlayFeedbacks();
                 currentJumpCD = jumpCD;
+                isAbleToExtraJump = false;
             }
             else
             {
@@ -232,6 +241,16 @@ public class PlayerController : MonoBehaviour
 
         }
 
+    }
+
+    public void TempDisableControls()
+    {
+        enableControls = false;
+        Invoke("EnableControls", 0.5f);
+    }
+    private void EnableControls()
+    {
+        enableControls = true;
     }
     IEnumerator CounterForce(Vector2 dir, float force)
     {
@@ -258,15 +277,26 @@ public class PlayerController : MonoBehaviour
     }
     public void ExtraJump()
     {
-        StartCoroutine(EnableExtraJump(extraJumpTime));
-    }
-    public IEnumerator EnableExtraJump(float timePeriod)
-    {
         isAbleToExtraJump = true;
+        if (extraJumpRoutine != null)
+        {
+            Debug.Log("Stop Previous Extra Jump Coro early");
+            StopCoroutine(extraJumpRoutine);
+        }
+        extraJumpRoutine = StartCoroutine(EnableExtraJump());
+    }
+    public IEnumerator EnableExtraJump()
+    {
         yield return new WaitForSeconds(0.5f);
         playerCanExtraJump.PlayFeedbacks();
-        yield return new WaitForSeconds(timePeriod);
+        yield return new WaitForSeconds(extraJumpTime);
+        Debug.Log("Extra Jump Is Disable");
         isAbleToExtraJump = false;
+    }
+
+    public void StopExtraJumpCoroutines()
+    {
+        StopCoroutine(EnableExtraJump());
     }
 
     private IEnumerator TempZeroGravity(float timePeriod)

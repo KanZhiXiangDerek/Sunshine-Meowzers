@@ -6,6 +6,8 @@ public class PlayerCollision : MonoBehaviour
 {
     [Header("References"), Space(10)]
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private float reduceVelocityMutipler = 10f;
+    [SerializeField] private float respawnDelay = 2f;
     [SerializeField] private Rigidbody2D rb;
     private Vector2 spawnPos;
 
@@ -21,7 +23,7 @@ public class PlayerCollision : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ground")
         {
-            rb.velocity = Vector2.zero;
+            rb.velocity = rb.velocity/ reduceVelocityMutipler;
             landFeedback.PlayFeedbacks();
             playerController.AnimTrigger("IsLanding");
             playerController.ResetAnimTrigger("IsJumping");
@@ -44,7 +46,8 @@ public class PlayerCollision : MonoBehaviour
         {
             rb.velocity = Vector2.zero;
             deathFeedback.PlayFeedbacks();
-            Invoke("Respawn", 0.2f);
+            Invoke("ScreenFade", respawnDelay / 3);
+            Invoke("Respawn", respawnDelay);
         }
 
         if (collision.gameObject.tag == "Enemy")
@@ -54,13 +57,14 @@ public class PlayerCollision : MonoBehaviour
                 Destroy(collision.gameObject);
                 rb.velocity = Vector2.zero;
                 hitEnemyFeedback.PlayFeedbacks();
-                playerController.StartCoroutine(playerController.EnableExtraJump(2.0f));
+                playerController.ExtraJump();
             }
             else
             {
                 rb.velocity = Vector2.zero;
                 deathFeedback.PlayFeedbacks();
-                Invoke("Respawn", 0.2f);
+                Invoke("ScreenFade", respawnDelay / 3);
+                Invoke("Respawn", respawnDelay);
             }
         }
     }
@@ -85,7 +89,7 @@ public class PlayerCollision : MonoBehaviour
         {
             if (collision.gameObject.GetComponent<EnemyScipt>().IsAbleToBeDestroyed())
             {
-                playerController.StartCoroutine(playerController.EnableExtraJump(1.0f));
+                playerController.ExtraJump();
             }
         }
     }
@@ -105,7 +109,7 @@ public class PlayerCollision : MonoBehaviour
             MovingPlatform plat = collision.gameObject.GetComponent<MovingPlatform>();
             if (plat.GetWait() == false)
             {
-                playerController.StartCoroutine(playerController.EnableExtraJump(3.0f));
+                playerController.ExtraJump();
                 hitPlatformFeedback.PlayFeedbacks();
                 transform.position = Vector2.MoveTowards(transform.position, collision.transform.position, 100f * Time.deltaTime);
             }
@@ -124,7 +128,8 @@ public class PlayerCollision : MonoBehaviour
             {
                 rb.velocity = Vector2.zero;
                 deathFeedback.PlayFeedbacks();
-                Invoke("Respawn", 0.2f);
+                Invoke("ScreenFade", respawnDelay / 3);
+                Invoke("Respawn", respawnDelay);
             }
         }
 
@@ -163,7 +168,7 @@ public class PlayerCollision : MonoBehaviour
             hitPlatformFeedback.PlayFeedbacks();
             rb.velocity = Vector2.zero;
             playerController.SetZeroGravity(1.0f);
-            playerController.StartCoroutine(playerController.EnableExtraJump(2.0f));
+            playerController.ExtraJump();
             Destroy(collision.gameObject);
         }
 
@@ -176,9 +181,13 @@ public class PlayerCollision : MonoBehaviour
 
     }
 
+    private void ScreenFade()
+    {
+        GameMan.instance.ScreenFade(); 
+    }
     private void Respawn()
     {
-        rb.velocity = Vector2.zero;
         GameMan.instance.SetLevel();
+        playerController.TempDisableControls();
     }
 }
